@@ -118,6 +118,8 @@ The original archive contains historical variants, final `v6` scripts, and expli
 
 **Decision implementation update (2026-10-24).** The frozen policy retrieval endpoint is 2026. Publications through 2022 form the primary policy-link association sample; publications through 2021 form the longer-window robustness sample; and all retained publications form a clearly labelled sensitivity sample. These choices were recorded before association-model fitting.
 
+The temporal implementation reports only year differences stored on linked Dimensions records and retains negative differences; it does not fit an additional policy regression when the separate event-adequacy rule precludes one. See [`docs/analysis/FAIRification_policy_window_and_record_timing_contract.md`](../analysis/FAIRification_policy_window_and_record_timing_contract.md).
+
 **H. Institutions, funders, issuers, and countries.** Adapt `step6_v6_networks_organizations_countries.py`. Roles stay distinct: publication affiliations are not funders, and funders are not policy issuers. Results are descriptive representations and degree/concentration summaries, not claims of institutional influence.
 
 **I. Robustness.** Adapt `step7_v6_indicator_robustness.py` to the FAIR codebook and the NMF design. Robustness will cover at least NMF stability, low-margin assignment exclusions, FAIR indicator definitions if used, the policy observation window, and a clearly labelled leave-one-out NMF sensitivity excluding the single documented manual addition. The 163-record cohort remains primary; the leave-one-out result checks whether a foundational article alone determines the topic solution. It will not introduce new terms or choose a model because its result is more favorable.
