@@ -1,0 +1,59 @@
+# Credentials and local secrets
+dimensions_api_key.txt
+*.env
+.env
+.env.*
+!*.env.example
+*.token
+*.pem
+*.key
+
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+.idea/
+
+# Local data: keep only explanatory README files under protected directories
+/data/*
+!/data/README.md
+/derived_outputs/*
+!/derived_outputs/README.md
+/figures/*
+!/figures/README.md
+/manuscript/*
+!/manuscript/README.md
+
+# Raw Dimensions/API material wherever it is written
+**/02_dimensions_raw/
+**/*_response.json
+**/*_retrieval_manifest.json
+**/*_metadata_manifest.json
+**/*_candidates.csv
+**/*_decisions.csv
+**/*_assignments_*.csv
+**/*.pkl
+**/*.pickle
+
+# Local packaged outputs and data extracts
+*.zip
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.sqlite
+*.db
+
+# Data-derived graphics and documents
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.eps

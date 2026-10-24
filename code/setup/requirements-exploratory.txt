@@ -1,0 +1,4 @@
+# Install only after the core pipeline is working.
+# These packages support optional mixed-mode community analyses.
+python-igraph==0.11.6
+leidenalg==0.10.2
