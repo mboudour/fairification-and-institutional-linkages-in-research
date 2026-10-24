@@ -134,6 +134,8 @@ The temporal implementation reports only year differences stored on linked Dimen
 
 **K. Figures and paper materials.** Adapt the final figure and supplementary-material scripts only after the tables and sensitivity decisions are frozen. Figures will read only certified aggregate outputs and will state denominators, matched-corpus restrictions, and outcome definitions.
 
+**Decision implementation update (2026-10-24).** Before figures or manuscript tables are generated, `17_build_certified_results_bundle.py` verifies the completed manifests and SHA-256 entries for selected non-record-level outputs from stages 10–16. It creates a protected local reporting bundle, including source-to-Dimensions scope, linkage outcomes, association status, temporal, role-separated network, robustness, and configuration summaries. It rejects record-level or identifier-bearing tables and does not release data to GitHub. Later figure and paper-material scripts must read this certified bundle rather than select stage outputs independently. See [`docs/reporting/FAIRification_certified_results_bundle_contract.md`](../reporting/FAIRification_certified_results_bundle_contract.md).
+
 ### Exploratory analyses
 
 The archive also contains mixed-mode communities (`step8_v6_mixed_mode_communities.py`), coupled NMF profiles (`step9_v6_coupled_nmf_profiles.py`), regularized coupled Poisson factorization (`step10_v6_regularized_coupled_poisson.py`), and correspondence analysis (`step11_v6_correspondence_analysis.py`). These are valuable possibilities, but they are not required to answer the four core project objectives.
