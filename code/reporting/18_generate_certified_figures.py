@@ -34,7 +34,7 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "18_generate_certified_figures_1.0"
+SCRIPT_VERSION = "18_generate_certified_figures_1.1"
 REQUIRED_BUNDLE_STAGE = "17_build_certified_results_bundle_1.0"
 EXPECTED_SOURCE_RECORDS = 163
 EXPECTED_PUBLICATION_RECORDS = 144
@@ -483,7 +483,11 @@ def validate_figure_inputs(tables: dict[str, pd.DataFrame]) -> None:
     timing = tables["timing"]
     require_columns(
         timing,
-        {"relation", "n_negative_record_year_differences", "n_zero_record_year_differences", "n_positive_record_year_differences", "median_record_year_difference"},
+        {
+            "relation", "n_edges", "n_edges_with_both_record_years", "n_edges_missing_at_least_one_record_year",
+            "n_negative_record_year_differences", "n_zero_record_year_differences", "n_positive_record_year_differences",
+            "median_record_year_difference",
+        },
         "Record-year difference summary",
     )
     if set(timing["relation"]) != {"publication_grant", "publication_policy_document"}:
@@ -493,8 +497,16 @@ def validate_figure_inputs(tables: dict[str, pd.DataFrame]) -> None:
     expected_timing_edges = {"publication_grant": 163, "publication_policy_document": 223}
     for _, row in timing.iterrows():
         counts = [int(pd.to_numeric(row[column], errors="raise")) for column in ("n_negative_record_year_differences", "n_zero_record_year_differences", "n_positive_record_year_differences")]
-        if any(value < 0 for value in counts) or sum(counts) != expected_timing_edges[str(row["relation"])]:
-            raise FigureGenerationFailure("Record-year category counts do not reconcile to the audited relation-edge totals.")
+        total_edges = int(pd.to_numeric(row["n_edges"], errors="raise"))
+        dated_edges = int(pd.to_numeric(row["n_edges_with_both_record_years"], errors="raise"))
+        missing_year_edges = int(pd.to_numeric(row["n_edges_missing_at_least_one_record_year"], errors="raise"))
+        if (
+            total_edges != expected_timing_edges[str(row["relation"])]
+            or any(value < 0 for value in (*counts, dated_edges, missing_year_edges))
+            or sum(counts) != dated_edges
+            or dated_edges + missing_year_edges != total_edges
+        ):
+            raise FigureGenerationFailure("Record-year category counts do not reconcile to Stage 13's dated-pair and missing-year denominators.")
         median = float(pd.to_numeric(row["median_record_year_difference"], errors="raise"))
         if not math.isfinite(median):
             raise FigureGenerationFailure("Record-year median must be finite.")
@@ -741,12 +753,13 @@ def figure_4_timing_and_policy_adequacy(tables: dict[str, pd.DataFrame], output_
         values = timing[column].to_numpy(dtype=float)
         axes[0].bar(labels, values, bottom=bottom, color=color, width=0.62, label=label)
         bottom += values
-    axes[0].set_ylabel("Recorded relation edges")
+    axes[0].set_ylabel("Dated recorded relation edges")
     axes[0].set_title("A. Record-year ordering is descriptive", loc="left", fontsize=10.5)
     axes[0].legend(frameon=False, fontsize=8, loc="upper left")
     axes[0].grid(axis="y")
     for index, row in timing.iterrows():
         axes[0].text(index, bottom[index] + max(bottom) * 0.025, f"Median: {float(row['median_record_year_difference']):+.1f} years", ha="center", fontsize=8.3)
+        axes[0].text(index, -max(bottom) * 0.085, f"{int(row['n_edges_with_both_record_years'])}/{int(row['n_edges'])} with both years", ha="center", fontsize=7.8, color=MUTED)
 
     window_labels = ["Primary\nthrough 2022", "Longer-window\nthrough 2021", "All final P\nsensitivity"]
     events = policy["n_policy_linked_publications"].to_numpy(dtype=float)
@@ -764,7 +777,7 @@ def figure_4_timing_and_policy_adequacy(tables: dict[str, pd.DataFrame], output_
         axes[1].text(index, event + 1.0, f"{int(event)}/{int(n_publications)}\nnot fit", ha="center", va="bottom", fontsize=8.2, color=PURPLE)
         axes[1].text(index, requirement + 1.0, f"{int(requirement)} required", ha="center", va="bottom", fontsize=7.6, color=GOLD)
     fig.suptitle("Record-year context and policy-link event adequacy", x=0.01, y=1.03, ha="left", fontsize=13, fontweight="bold")
-    fig.text(0.01, -0.05, "Record-year differences are stored database dates, not causal lags or time to impact. Sparse policy links are reported descriptively rather than replaced with an opportunistic sparse regression.", fontsize=8.3, color=MUTED)
+    fig.text(0.01, -0.05, "Bars include only recorded relation edges with both stored years; missing years are not imputed. Record-year differences are descriptive database dates, not causal lags or time to impact. Sparse policy links are reported descriptively rather than replaced with an opportunistic sparse regression.", fontsize=8.3, color=MUTED)
     return save_figure(fig, output_dir, "figure_4_record_year_context_and_policy_adequacy")
 
 
@@ -814,7 +827,7 @@ def figure_5_cross_relation_configurations(tables: dict[str, pd.DataFrame], outp
 
 
 def captions_markdown() -> str:
-    return """# FAIRification figure captions\n\n## Figure 1. Study scope and Dimensions-recorded relation layers\nThe frozen source cohort comprises 163 publications, of which 144 exact DOI-matched publications form the final Dimensions anchor. Grant and policy outcomes are Dimensions-recorded identifier links. The diagram is descriptive and does not represent funding intent, policy endorsement, uptake, or impact.\n\n## Figure 2. Supplementary K=3 theme linkage rates\nHard-assignment K=3 NMF component groupings and descriptive recorded-linkage rates are shown with Wilson 95% intervals. These hard-assignment summaries are supplementary only; primary association analyses use continuous NMF shares. K=3 stability is component-specific: the small heritage/preservation specialization carries a bootstrap caveat and has no K=3 leave-one-out result. Sparse policy-link counts do not support multivariable policy regression.\n\n## Figure 3. Primary grant-link associations\nOdds ratios are from the predeclared publication-year-adjusted model of a recorded grant link. NMF shares are scaled per ten percentage points and the technical metadata/semantic-workflow theme is the compositional reference. The estimates are conditional associations, not causal effects.\n\n## Figure 4. Record-year context and policy event adequacy\nStored record-year differences are descriptive database-date quantities rather than causal lags. The figure also shows why policy-link models are withheld: the primary through-2022 policy window has three observed events against a predeclared 30-event requirement.\n\n## Figure 5. Year-stratified cross-relation configurations\nObserved P–G/P–D configurations are compared with the primary null that permutes P–D publication endpoint mappings within publication-year strata while holding P–G ties fixed. The result concerns structural alignment of recorded relations only; it does not identify a grant-to-policy pathway.\n"""
+    return """# FAIRification figure captions\n\n## Figure 1. Study scope and Dimensions-recorded relation layers\nThe frozen source cohort comprises 163 publications, of which 144 exact DOI-matched publications form the final Dimensions anchor. Grant and policy outcomes are Dimensions-recorded identifier links. The diagram is descriptive and does not represent funding intent, policy endorsement, uptake, or impact.\n\n## Figure 2. Supplementary K=3 theme linkage rates\nHard-assignment K=3 NMF component groupings and descriptive recorded-linkage rates are shown with Wilson 95% intervals. These hard-assignment summaries are supplementary only; primary association analyses use continuous NMF shares. K=3 stability is component-specific: the small heritage/preservation specialization carries a bootstrap caveat and has no K=3 leave-one-out result. Sparse policy-link counts do not support multivariable policy regression.\n\n## Figure 3. Primary grant-link associations\nOdds ratios are from the predeclared publication-year-adjusted model of a recorded grant link. NMF shares are scaled per ten percentage points and the technical metadata/semantic-workflow theme is the compositional reference. The estimates are conditional associations, not causal effects.\n\n## Figure 4. Record-year context and policy event adequacy\nRecord-year bars include only recorded relation edges with both stored years; missing years are not imputed. Stored record-year differences are descriptive database-date quantities rather than causal lags. The figure also shows why policy-link models are withheld: the primary through-2022 policy window has three observed events against a predeclared 30-event requirement.\n\n## Figure 5. Year-stratified cross-relation configurations\nObserved P–G/P–D configurations are compared with the primary null that permutes P–D publication endpoint mappings within publication-year strata while holding P–G ties fixed. The result concerns structural alignment of recorded relations only; it does not identify a grant-to-policy pathway.\n"""
 
 
 def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
