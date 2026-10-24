@@ -59,24 +59,11 @@ derived_outputs/
   released_results/    Reviewed non-record-level certified result tables
 figures/
   manuscript/          Reviewed PNG/PDF manuscript figures and captions
-streamlit_app.py       Aggregate-only companion dashboard
 ```
 
 ## Data and credential protection
 
 Never commit source cohorts, Dimensions raw responses, record-level matching tables, publication metadata, abstracts, publication-level assignments, identifiers, organization or issuer names, node lists, edge lists, manuscript source, or `dimensions_api_key.txt`. The `.gitignore` and [`check_release_boundary.py`](code/validation/check_release_boundary.py) permit only named reviewed aggregate tables and figures after release review.
-
-## Local dashboard
-
-The companion application is [`streamlit_app.py`](streamlit_app.py). It reads only the reviewed aggregate tables and figures released in this repository; it cannot authenticate to Dimensions or open private data.
-
-Run it locally after installing [`requirements.txt`](requirements.txt):
-
-```bash
-streamlit run streamlit_app.py
-```
-
-The local dashboard is fully functional from a normal clone because its aggregate-only inputs and figures are versioned. A Streamlit Community Cloud deployment is not configured, so there is currently no hosted dashboard URL.
 
 ## Attribution
 
