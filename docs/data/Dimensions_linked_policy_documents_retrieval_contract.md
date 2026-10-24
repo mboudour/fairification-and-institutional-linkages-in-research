@@ -1,0 +1,11 @@
+# Dimensions linked policy-document retrieval contract
+
+This note documents the local policy-document retrieval implemented in `code/relational/09_retrieve_linked_policy_documents.py`. The input is the frozen 144-record `publication_anchor_final`. It queries the Dimensions Policy Documents source for records whose `publication_ids` include one or more retained publication IDs.
+
+Dimensions documents `publication_ids` as the list of Dimensions publication IDs related to a policy document and explicitly describes the reverse lookup from a publication identifier to policy documents. Its cross-source data model identifies the publication-policy relationship as an identifier link through `publication_ids`. [Dimensions policy-document schema](https://docs.dimensions.ai/dsl/datasource-policy_documents.html) [Dimensions cross-source data model](https://docs.dimensions.ai/dsl/data-model.html)
+
+The request is limited to the policy-document identifier, title, year, `publication_ids`, publisher organization, publisher country/city, and linkout. Dimensions defines `publisher_org` as the GRID organization publishing the policy document and separately supplies publisher country and city entities. The script does not request policy-document full text. [Dimensions policy-document schema](https://docs.dimensions.ai/dsl/datasource-policy_documents.html)
+
+Policy documents are retrieved in batches of retained publication IDs. Each batch is paged using Dimensions DSL `limit` and `skip` so that a batch is not silently truncated. The script requires a valid page count and preserves each policy document’s full returned `publication_ids` field. A `retrieved_by_publication_ids` field records the retained publication IDs responsible for retrieval. A later edge-construction stage will intersect `publication_ids` with the frozen publication anchor; it will not infer links from titles, topics, organizations, or free text.
+
+These are Dimensions-recorded database relationships only. They do not establish policy endorsement, policy uptake, policy impact, topical similarity, institutional intention, or causal influence. Raw DSL queries, API responses, policy-document records, and manifests are protected local licensed materials and remain excluded from GitHub.
