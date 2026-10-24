@@ -1,0 +1,7 @@
+﻿group_variable,group_level,outcome,n_publications,n_linked_publications,linkage_rate_pct,wilson_ci_95_low_pct,wilson_ci_95_high_pct,mean_number_of_recorded_links,low_denominator_flag,low_event_flag
+dominant_K3_theme__supplementary,"Digital cultural heritage, collections, and preservation",has_grant_link,13,2,15.385,4.326,42.235,0.2308,True,True
+dominant_K3_theme__supplementary,"Digital cultural heritage, collections, and preservation",has_policy_document_link,13,0,0.0,0.0,22.81,0.0,True,True
+dominant_K3_theme__supplementary,"Institutional stewardship, research-data management, and open-science practice",has_grant_link,51,10,19.608,11.015,32.458,0.3137,False,False
+dominant_K3_theme__supplementary,"Institutional stewardship, research-data management, and open-science practice",has_policy_document_link,51,0,0.0,0.0,7.005,0.0,False,True
+dominant_K3_theme__supplementary,"Technical metadata, semantic infrastructure, and reproducible workflows",has_grant_link,80,40,50.0,39.297,60.703,1.8,False,False
+dominant_K3_theme__supplementary,"Technical metadata, semantic infrastructure, and reproducible workflows",has_policy_document_link,80,4,5.0,1.961,12.162,2.7875,False,True

@@ -1,0 +1,4 @@
+﻿analysis_sample,n_final_publications,n_policy_linked_publications,policy_linkage_rate_pct,minimum_observed_policy_calendar_years,maximum_observed_policy_calendar_years,low_event_flag,purpose
+all_final_P__policy_window_sensitivity,144,4,2.778,1,11,True,All final P; sensitivity because newer publications have fewer observed policy-record years.
+primary_policy_window,72,3,4.167,5,11,True,Primary policy-link observation cohort fixed before association modeling.
+longer_window_robustness,55,3,5.455,6,11,True,Longer-observation policy-window robustness cohort.

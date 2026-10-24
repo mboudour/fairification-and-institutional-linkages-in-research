@@ -1,0 +1,5 @@
+﻿role,available_source_records_or_nodes,records_or_nodes_with_organization_id_field,records_or_nodes_with_organization_name_field,records_or_nodes_with_organization_country_field,records_or_nodes_with_organization_type_field,role_identity_rule
+publication_affiliation_organization,144,128,135,132,128,Only an explicit Dimensions organization ID defines an organization node within this role; no name-based resolution is performed.
+linked_grant_funder_organization,152,152,152,152,0,Only an explicit Dimensions organization ID defines an organization node within this role; no name-based resolution is performed.
+linked_grant_recipient_organization,152,150,151,151,150,Only an explicit Dimensions organization ID defines an organization node within this role; no name-based resolution is performed.
+policy_issuer_organization,44,44,44,44,44,Only an explicit Dimensions organization ID defines an organization node within this role; no name-based resolution is performed.

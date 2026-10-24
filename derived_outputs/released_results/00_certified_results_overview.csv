@@ -1,0 +1,9 @@
+﻿section,measure,value,unit,note
+source_to_Dimensions_scope,frozen_curated_source_cohort_records,163,records,162-record source export plus one documented FAIR Principles addition.
+source_to_Dimensions_scope,Dimensions_recovered_analytic_subset_records,144,records,88.344% of the frozen curated source cohort; exact DOI-first matches only.
+source_to_Dimensions_scope,unresolved_source_records_retained_in_audit,19,records,Unresolved records remain in the coverage audit and are not treated as absent from Dimensions.
+recorded_publication_linkage_outcomes,has_grant_link,52,linked publications of 144,Recorded-linkage rate: 36.111%. Not a causal or impact measure.
+recorded_publication_linkage_outcomes,has_policy_document_link,4,linked publications of 144,Recorded-linkage rate: 2.778%. Not a causal or impact measure.
+audited_relation_layers,publication_grant,163,unique identifier edges,Dimensions-recorded identifier relation count.
+audited_relation_layers,publication_policy_document,223,unique identifier edges,Dimensions-recorded identifier relation count.
+audited_relation_layers,policy_issuer_publication,47,unique identifier edges,Dimensions-recorded identifier relation count.

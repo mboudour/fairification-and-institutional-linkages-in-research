@@ -2,15 +2,15 @@
 
 **Moses Boudourides**
 
-Reproducibility repository for a publication-centred study of FAIRification, research-data stewardship, and Dimensions-recorded institutional linkages.
+Reproducibility repository for a publication-centred study of FAIRification, research-data stewardship, and Dimensions-recorded grant and policy-document links.
 
-## Scope
+## Study in brief
 
-The project starts from a curated external source cohort and constructs a high-confidence Dimensions-recovered publication anchor through deterministic DOI-first matching. Publication titles and abstracts are then used—before any relational outcomes are examined—to diagnose FAIRification thematic structure with nonnegative matrix factorization (NMF). Later project stages will examine Dimensions-recorded publication–grant and publication–policy-document relations, alongside descriptive institutional annotations.
+The project starts from a curated external source cohort and constructs a high-confidence Dimensions publication anchor through deterministic DOI-first matching. Publication titles and abstracts are then used—before relational outcomes are examined—to diagnose FAIRification thematic structure with nonnegative matrix factorization (NMF). The completed relational stage examines Dimensions-recorded publication–grant and publication–policy-document links, descriptive role-separated network summaries, and local grant–policy configuration patterns.
 
-This repository intentionally contains **no source or record-level research data**. It does not contain source CSV files, Dimensions API responses, publication-level exports, record-level match tables, abstracts, topic assignments, credentials, or a manuscript-result package. It does contain a small set of reviewed, component-level NMF diagnostic aggregates that cannot identify publications or entities.
+The study does not interpret recorded grant or policy links as causal effects, funding intent, policy uptake, endorsement, impact, or institutional influence.
 
-## Data provenance and current study population
+## Data provenance and analytic scope
 
 ### Scopus source study
 
@@ -18,88 +18,66 @@ The source bibliographic design is drawn from Papachristopoulos, Sfakakis, and P
 
 > Papachristopoulos, L., Sfakakis, M., & Papatheodorou, C. (2026). *Who Cares About FAIR Data? Libraries in the Ecosystem of FAIRification*. **Metrics, 3**, 22. https://doi.org/10.3390/metrics3040022
 
-That study's broad corpus contains **2,790** English-language journal articles and conference papers published from **2000–2025**, retrieved in Scopus using explicit FAIR-focused expressions (`FAIR data`, `FAIR principle`, `fairification`, or `Findable Accessible Interoperable Reusable`). Its library-focused subset adds `library` or `libraries` to the title/abstract/keyword search and contains **162** records. The source paper analyzes this literature bibliometrically with Bibliometrix; it does not use Dimensions links.
+That study's broad corpus contains 2,790 English-language journal articles and conference papers published from 2000–2025. Its library-focused subset adds `library` or `libraries` to the FAIR-focused search design and contains 162 records. The source paper analyses the literature bibliometrically with Bibliometrix; it does not use Dimensions relation data.
 
-### This project's curated source cohort
+### Curated source cohort and Dimensions anchor
 
-This project begins from the shared 162-record library-focused Scopus export, rather than from the paper's full 2,790-record corpus. The source export did not contain the foundational article by Wilkinson et al., *The FAIR Guiding Principles for scientific data management and stewardship* (2016), DOI `10.1038/sdata.2016.18`. A documented, reproducible manual addition produces a frozen **163-record** source cohort. The original export, the curated cohort, and the associated curation manifest remain private and are not distributed here.
+This project begins from the shared 162-record library-focused Scopus export. A documented addition of Wilkinson et al.'s foundational FAIR Principles paper (2016) produces a frozen **163-record** source cohort. A deterministic DOI-first procedure accepted **144 exact one-to-one Dimensions matches** (**88.344%** of the curated cohort). The 19 unresolved records remain in the matching audit; they are not treated as absent from Dimensions.
 
-### Dimensions-recovered analytic subset
+The primary analytic anchor contains 144 matched publications. All have titles and 140 have abstracts. Publication-text thematic diagnostics were completed before grant, policy-document, citation, funder, organization, country, or relation variables were retrieved or analysed.
 
-Dimensions is used for a new, separate relational enrichment of the frozen source cohort. It is not treated as a replacement for Scopus and the project does not assert that unrecovered records are absent from Dimensions.
+## Main aggregate findings
 
-- A deterministic DOI-first procedure queried the 148 source records with a DOI.
-- **144 of the 163** curated source records were accepted as unambiguous, one-to-one exact DOI matches in Dimensions (**88.34%** source-cohort recovery).
-- The remaining **19** source records are retained in the matching audit but excluded from the primary Dimensions publication anchor: 15 have no source DOI and 4 did not return a Dimensions candidate in the DOI-first procedure.
-- The initial Dimensions publication-text subset contains title metadata for all 144 matched records and abstracts for 140 of them. It is used for outcome-blind thematic diagnostics before retrieval of grant, policy-document, citation, funder, organization, country, or other relational layers.
+The frozen primary NMF representation is **K=3**: institutional stewardship, research-data management, and open-science practice (51 publications; 35.4%); technical metadata, semantic infrastructure, and reproducible workflows (80; 55.6%); and digital cultural heritage, collections, and preservation (13; 9.0%). K=2 is retained as a coarsened sensitivity. The small heritage/preservation component has a component-specific bootstrap caveat and is interpreted cautiously.
 
-All source and Dimensions record-level materials, raw API responses, matching tables, publication assignments, titles, abstracts, and relation edges remain local and excluded from version control.
+Among the 144 anchor publications, 52 (36.111%) have a Dimensions-recorded grant link and 4 (2.778%) have a Dimensions-recorded policy-document link. The year-adjusted primary grant-link model finds lower conditional odds of a recorded grant link for a ten-percentage-point compositional shift from the technical-metadata reference toward institutional stewardship/open science (OR 0.772, 95% CI 0.684–0.871) or heritage/preservation (OR 0.785, 95% CI 0.647–0.952). These are recorded-link associations, not causal funding effects.
 
-## Frozen outcome-blind NMF decision
+Policy links are too sparse for the predeclared multivariable policy model: the primary through-2022 window contains 3 events among 72 publications, below the 30-event adequacy threshold. The primary publication-year-stratified configuration test shows no evidence that the observed publication overlap of recorded grant and policy links exceeds its year-conditioned null.
 
-Before any grant, policy-document, citation, funder, organization, country, affiliation, or linkage variable was retrieved or inspected, the publication-text diagnostic compared K=2, K=3, and K=4 NMF solutions. The primary specification is **K=3**: **institutional stewardship, research-data management, and open-science practice** (51 publications; 35.4%); **technical metadata, semantic infrastructure, and reproducible workflows** (80; 55.6%); and **digital cultural heritage, collections, and preservation** (13; 9.0%).
+## Reviewed aggregate-only release
 
-The result is a two-level account—two broad orientations plus a smaller specialist theme—not a forced analogue of the prior AI–mental-health partition. K=2 is retained only as a coarsened sensitivity framing. K=4 is rejected because it adds an unstable three-publication event-series component. The smaller heritage/preservation component is semantically coherent but has one bootstrap non-reproduction and is interpreted cautiously. The complete rationale, diagnostics, caveats, and locked analytical use are recorded in the [frozen NMF theme-decision record](docs/thematic/FAIRification_NMF_theme_decision.md).
+The repository contains a deliberately limited, reviewed release of 26 aggregate result tables in [`derived_outputs/released_results/`](derived_outputs/released_results/) and five reviewed figures in [`figures/manuscript/`](figures/manuscript/). The release includes no source records, Dimensions API responses, publication text, identifiers, matching records, publication-level assignments, organization names, node lists, or edge lists.
+
+See the [aggregate-results release note](docs/release/AGGREGATE_RESULTS_RELEASE.md) for the release review, scope, and exclusions. The `results_bundle_index.csv` retained in the aggregate folder documents table-level source-stage provenance without device-local paths or identifiers.
 
 ## Repository layout
 
 ```text
 code/
-  setup/              Local environment definitions and preflight checks
-  source_curation/    Reproducible source-cohort curation code
-  matching/           DOI-first matching design and API-safety notes
-  thematic/           Publication-text NMF preparation and diagnostic code
-  validation/         Reserved for validation and release checks
+  matching/            DOI-first matching design and API-safety notes
+  thematic/            Publication-text NMF preparation and diagnostics
+  relational/          Local relational retrieval and audit scripts
+  analysis/            Local association, timing, network, and configuration scripts
+  reporting/           Certified bundle and figure scripts
+  validation/          Repository release-boundary check
 docs/
-  protocol/           Transparent analysis protocol
-  setup/              Mac setup and local input/upload documentation
-  source_curation/    Documentation of the foundational FAIR Principles record
-queries/              Reusable Dimensions DSL templates; no retrieved results
-data/                 Local-only data location; ignored except this README
-derived_outputs/      Reviewed aggregate outputs only; record-level outputs remain local
-figures/              Local-only data-derived figures; ignored except this README
-manuscript/           Reserved for manuscript source, not results or data
-tools/                Utility scripts
-streamlit_app.py       Private-local companion dashboard
+  protocol/            Transparent analysis protocol
+  analysis/            Frozen analytical specifications and contracts
+  release/             Aggregate-only release note
+derived_outputs/
+  thematic/            Reviewed component-level NMF diagnostics
+  released_results/    Reviewed non-record-level certified result tables
+figures/
+  manuscript/          Reviewed PNG/PDF manuscript figures and captions
+streamlit_app.py       Aggregate-only companion dashboard
 ```
 
 ## Data and credential protection
 
-Never commit any of the following:
+Never commit source cohorts, Dimensions raw responses, record-level matching tables, publication metadata, abstracts, publication-level assignments, identifiers, organization or issuer names, node lists, edge lists, manuscript source, or `dimensions_api_key.txt`. The `.gitignore` and [`check_release_boundary.py`](code/validation/check_release_boundary.py) permit only named reviewed aggregate tables and figures after release review.
 
-- source cohorts or manually curated source exports;
-- Dimensions raw responses, matching tables, record-level metadata, abstracts, or API-output manifests;
-- source or record-level output tables, serialized objects, topic assignments, record-level review packets, unreviewed figures, or manuscript result files derived from non-public data;
-- `dimensions_api_key.txt`, authentication tokens, environment files containing secrets, or notebook checkpoints.
+## Local dashboard
 
-The `.gitignore` is intentionally restrictive. Keep research inputs and record-level outputs in local protected directories. Only specifically reviewed component-level aggregate outputs, currently in `derived_outputs/thematic/`, may be committed after passing the repository release-boundary check.
+The companion application is [`streamlit_app.py`](streamlit_app.py). It reads only the reviewed aggregate tables and figures released in this repository; it cannot authenticate to Dimensions or open private data.
 
-## Current project boundary
-
-The repository currently records the methodological and computational foundation through the frozen publication-only K=3 NMF decision. It does not claim that later grant, policy-document, citation, funder, organization, country, or linkage analyses have been completed or released.
-
-## Local environment
-
-Create the core environment from `code/setup/environment-core-macos.yml`, then run:
-
-```bash
-python code/setup/verify_fairification_environment.py
-```
-
-See [the Mac setup guide](docs/setup/Mac_local_environment_guide.md) and [the transparent protocol](docs/protocol/FAIRification_in_Dimensions_transparent_analysis_protocol.md) for the full workflow and data-handling boundaries.
-
-## Companion Streamlit dashboard
-
-The companion application is provided in [`streamlit_app.py`](streamlit_app.py). A live Streamlit Community Cloud deployment has **not** yet been created, so there is no live-app URL at this stage. The live link will be added only after the FAIRification project has its completed, reviewed, data-safe aggregate outputs, figures, and dashboard panels—following the same release structure as the completed AI–mental-health project.
-
-Run the local dashboard with:
+Run it locally after installing [`requirements.txt`](requirements.txt):
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-The dashboard is safe to commit because it does not authenticate to Dimensions or read raw source/Dimensions records. It documents the study design and displays the reviewed component-level NMF aggregates in `derived_outputs/thematic/`. It does not require, expose, or transmit source data, record-level metadata, or relation edges.
+The local dashboard is fully functional from a normal clone because its aggregate-only inputs and figures are versioned. A Streamlit Community Cloud deployment is not configured, so there is currently no hosted dashboard URL.
 
 ## Attribution
 
-Project owner: Moses Boudourides.
+Project owner and sole manuscript author: Moses Boudourides, School of Professional Studies, Northwestern University.

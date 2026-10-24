@@ -1,0 +1,4 @@
+﻿analysis_sample,policy_data_end_year,publication_year_rule,n_publications,n_policy_linked_publications,policy_linkage_rate_pct,minimum_observed_policy_calendar_years,purpose
+all_final_P__policy_window_sensitivity,2026,all years,144,4,2.778,1,Sensitivity only: recent publications have fewer observed policy-record years.
+primary_policy_window__publication_year_through_2022,2026,year <= 2022,72,3,4.167,5,Primary policy-link association sample.
+robustness_policy_window__publication_year_through_2021,2026,year <= 2021,55,3,5.455,6,Longer-observation-window robustness sample.

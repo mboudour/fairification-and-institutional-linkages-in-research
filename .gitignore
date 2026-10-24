@@ -19,8 +19,8 @@ __pycache__/
 .vscode/
 .idea/
 
-# Source and record-level data remain local. Reviewed, non-record-level NMF
-# aggregates are explicitly unignored at the end of this file.
+# Source and record-level data remain local. Only named reviewed aggregate releases
+# below are permitted; the exceptions must remain after these broad rules.
 /data/*
 !/data/README.md
 /derived_outputs/*
@@ -61,7 +61,6 @@ __pycache__/
 *.eps
 
 # Reviewed non-record-level NMF outputs permitted for reproducibility.
-# These exceptions must remain below the broad CSV and derived-output rules.
 !/derived_outputs/thematic/
 !/derived_outputs/thematic/README.md
 !/derived_outputs/thematic/topic_model_summary.csv
@@ -71,3 +70,17 @@ __pycache__/
 !/derived_outputs/thematic/bipole_screen.csv
 !/derived_outputs/thematic/validation_checks.csv
 !/derived_outputs/thematic/topic_2_to_3_crosswalk.csv
+
+# Reviewed aggregate-only certified-results release; no identifiers or record-level files.
+!/derived_outputs/released_results/
+!/derived_outputs/released_results/README.md
+!/derived_outputs/released_results/*.csv
+
+# Reviewed aggregate-only figures used by the public dashboard.
+!/figures/manuscript/
+!/figures/manuscript/*.png
+!/figures/manuscript/*.pdf
+!/figures/manuscript/figure_captions.md
+
+# Manuscript source, bibliography, figures, and build products remain outside GitHub.
+/manuscript/*

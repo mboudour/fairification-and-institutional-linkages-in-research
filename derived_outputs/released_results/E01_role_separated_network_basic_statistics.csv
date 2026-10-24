@@ -1,0 +1,7 @@
+﻿network,partition,node_type,available_nodes,connected_nodes,isolated_or_unconnected_nodes,unique_edges,weighted_edge_total,bipartite_density_among_connected_nodes,mean_unweighted_degree,median_unweighted_degree,maximum_unweighted_degree,mean_weighted_degree,median_weighted_degree,maximum_weighted_degree,connected_components,largest_component_total_nodes,largest_component_node_share_among_connected
+publication_grant,left,publication,144,52,92,163,163.0,0.02062247,3.134615,1.5,19,3.134615,1.5,19.0,44,23,0.112745
+publication_grant,right,grant,152,152,0,163,163.0,0.02062247,1.072368,1.0,4,1.072368,1.0,4.0,44,23,0.112745
+publication_policy_document,left,publication,144,4,140,223,223.0,0.25112613,55.75,2.5,217,55.75,2.5,217.0,3,221,0.977876
+publication_policy_document,right,policy_document,222,222,0,223,223.0,0.25112613,1.004505,1.0,2,1.004505,1.0,2.0,3,221,0.977876
+policy_issuer_publication,left,policy_issuer,44,44,0,47,223.0,0.26704545,1.068182,1.0,2,5.068182,2.0,43.0,1,48,1.0
+policy_issuer_publication,right,publication,144,4,140,47,223.0,0.26704545,11.75,1.0,44,55.75,2.5,217.0,1,48,1.0

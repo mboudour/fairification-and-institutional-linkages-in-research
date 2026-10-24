@@ -1,0 +1,10 @@
+﻿check,passed,detail
+all_stage_manifests_complete,True,Stages 10 through 16 are marked complete.
+full_cross_stage_hash_chain_certified,True,"Base, association, temporal, network, robustness, and configuration inputs match the supplied upstream manifests and artifacts."
+all_selected_input_hashes_and_row_counts_certified,True,Every selected aggregate table matches its producing-stage SHA-256 and required integral row count.
+frozen_source_to_Dimensions_163_to_144_denominator_reconciles,True,163 source / 144 recovered / 19 unresolved.
+frozen_recorded_linkage_and_edge_counts_reconcile,True,"52 grant-linked publications; 4 policy-linked publications; 163 P--G, 223 P--D, and 47 issuer--P edges."
+primary_grant_fit_and_event_limited_policy_not_fit_certified,True,Grant=fit; policy=not_fit; 3 primary-policy events versus 30 required.
+configuration_primary_statistics_and_null_status_reconcile,True,P--G only=50; P--D only=2; both=2; neither=90; both and degree-product nulls have Monte Carlo variation.
+aggregate_only_schema_and_cardinality_boundary,True,Selected tables pass normalized identifier/text-header screening and table-specific row ceilings.
+final_result,True,Certified aggregate reporting bundle created without new data retrieval or analysis.

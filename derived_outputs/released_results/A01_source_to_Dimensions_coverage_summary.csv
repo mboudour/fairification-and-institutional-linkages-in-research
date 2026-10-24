@@ -1,0 +1,2 @@
+﻿frozen_source_cohort_records,dimensions_recovered_analytic_subset_records,not_recovered_by_doi_first_procedure,dimensions_recovery_rate_pct,documented_manual_addition_recovered,record_level_recovered_records,interpretation
+163,144,19,88.344,True,144,The analytic relational anchor contains only the DOI-first Dimensions-recovered subset. The unresolved source records remain in the coverage audit and are not classified as absent from Dimensions.

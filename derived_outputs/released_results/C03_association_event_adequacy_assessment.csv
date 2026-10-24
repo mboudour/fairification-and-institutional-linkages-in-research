@@ -1,0 +1,7 @@
+﻿model_label,outcome,model_status,n_publications,n_events,event_rate_pct,n_nonintercept_parameters,minimum_events_per_parameter,required_minimum_events,reason
+grant_primary__continuous_K3_shares__year_adjusted,has_grant_link,fit,144,52,36.111,3,10,30,
+grant_low_margin_excluded_sensitivity__continuous_K3_shares__year_adjusted,has_grant_link,fit,133,45,33.835,3,10,30,
+grant_citation_adjusted_sensitivity__continuous_K3_shares__year_adjusted,has_grant_link,fit,144,52,36.111,4,10,40,
+policy_primary_window__continuous_K3_shares__year_adjusted,has_policy_document_link,not_fit,72,3,4.167,3,10,30,Event-adequacy rule not met: 3 observed events for 3 non-intercept parameters; at least 30 events are required.
+policy_longer_window_robustness__continuous_K3_shares__year_adjusted,has_policy_document_link,not_fit,55,3,5.455,3,10,30,Event-adequacy rule not met: 3 observed events for 3 non-intercept parameters; at least 30 events are required.
+policy_all_final_P_window_sensitivity__continuous_K3_shares__year_adjusted,has_policy_document_link,not_fit,144,4,2.778,3,10,30,Event-adequacy rule not met: 4 observed events for 3 non-intercept parameters; at least 30 events are required.

@@ -1,0 +1,5 @@
+﻿configuration,n_publications,share_of_final_P,mean_P_G_degree,mean_P_D_degree,mean_distinct_policy_issuers
+P_G_only,50,0.3472222222222222,2.94,0.0,0.0
+P_D_only,2,0.0138888888888888,0.0,2.5,1.0
+both,2,0.0138888888888888,8.0,109.0,22.5
+neither,90,0.625,0.0,0.0,0.0

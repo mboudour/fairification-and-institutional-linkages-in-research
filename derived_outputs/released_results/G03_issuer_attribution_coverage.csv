@@ -1,0 +1,2 @@
+﻿P_D_edge_incidences,issuer_attributed_P_D_edge_incidences,P_D_edge_incidences_without_issuer_attribution,issuer_attribution_coverage_pct,policy_linked_publications,policy_linked_publications_with_any_issuer_attribution,role
+223,223,0,100.0,4,4,Descriptive issuer-coverage context only; incomplete issuer metadata never gates the P--G/P--D configuration test.

@@ -1,0 +1,2 @@
+﻿excluded_record_description,full_corpus_records,excluded_records,leave_one_out_records,tfidf_features,full_K2_to_saved_K2_dominant_assignment_agreement,minimum_matched_component_cosine_similarity,maximum_matched_component_cosine_similarity,scope_limit
+documented_manual_addition,144,1,143,2275,1.0,0.9997716760814652,0.9999198552756008,K=2-only broad-structure sensitivity; no K=3 leave-one-out inference is made.
