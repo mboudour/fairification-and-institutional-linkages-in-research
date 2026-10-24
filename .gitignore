@@ -7,6 +7,7 @@ dimensions_api_key.txt
 *.token
 *.pem
 *.key
+.streamlit/secrets.toml
 
 # Python and editor artifacts
 __pycache__/

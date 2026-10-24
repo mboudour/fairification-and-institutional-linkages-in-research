@@ -1,5 +1,7 @@
 # FAIRification and Institutional Linkages in Research
 
+**Moses Boudourides**
+
 Private, data-free reproducibility repository for a publication-centred study of FAIRification, research-data stewardship, and Dimensions-recorded institutional linkages.
 
 ## Scope
@@ -52,6 +54,7 @@ derived_outputs/      Local-only computed outputs; ignored except this README
 figures/              Local-only data-derived figures; ignored except this README
 manuscript/           Reserved for manuscript source, not results or data
 tools/                Utility scripts
+streamlit_app.py       Private-local companion dashboard
 ```
 
 ## Data and credential protection
@@ -78,6 +81,16 @@ python code/setup/verify_fairification_environment.py
 ```
 
 See [the Mac setup guide](docs/setup/Mac_local_environment_guide.md) and [the transparent protocol](docs/protocol/FAIRification_in_Dimensions_transparent_analysis_protocol.md) for the full workflow and data-handling boundaries.
+
+## Companion Streamlit dashboard
+
+Run the local dashboard with:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The dashboard is safe to commit because it contains no research data and does not authenticate to Dimensions. It documents the study design and can render optional **local-only aggregate NMF outputs** if they are placed in `derived_outputs/private_nmf/`, which is ignored by Git. It does not require, expose, or transmit raw source or Dimensions records.
 
 ## Attribution
 
