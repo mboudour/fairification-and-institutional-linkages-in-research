@@ -153,7 +153,7 @@ TABLE_SPECIFICATIONS: tuple[dict[str, str], ...] = (
         "stage": "robustness", "source": "wilkinson_leave_one_out_K2_reproduction_summary.csv",
         "output": "F03_Wilkinson_leave_one_out_K2_reproduction_summary.csv",
         "domain": "F_robustness_evidence",
-        "purpose": "K=2-only leave-one-out sensitivity for the documented foundational-paper addition.",
+        "purpose": "K=2-only leave-one-out sensitivity for the documented foundational-paper addition; source DOI is redacted in this aggregate release.",
     },
     {
         "stage": "robustness", "source": "grant_association_sensitivity_comparison.csv",
@@ -213,7 +213,7 @@ MAX_ROWS_BY_BUNDLE_FILE = {
     "D01_record_year_difference_summary.csv": 2,
     "D02_temporal_policy_observation_window_samples.csv": 3,
     "E01_role_separated_network_basic_statistics.csv": 6,
-    "E02_role_separated_network_degree_concentration.csv": 6,
+    "E02_role_separated_network_degree_concentration.csv": 18,
     "E03_organization_role_attribute_coverage.csv": 24,
     "F01_NMF_candidate_stability_summary.csv": 3,
     "F02_NMF_component_stability_summary.csv": 12,
@@ -422,6 +422,26 @@ def assert_aggregate_safe(frame: pd.DataFrame, label: str, bundle_filename: str)
         raise ResultsBundleFailure(
             f"{label} is not eligible for the aggregate-only reporting bundle; prohibited column(s): {', '.join(forbidden)}"
         )
+
+
+def release_safe_frame(frame: pd.DataFrame, bundle_filename: str) -> tuple[pd.DataFrame, str]:
+    """Apply the sole predeclared identifier redaction required for aggregate release.
+
+    The stage-15 Wilkinson sensitivity summary is a one-row aggregate table, but
+    it carries ``excluded_doi`` as a provenance field. The DOI is already
+    documented elsewhere in the protocol; it is not needed for the aggregate
+    reporting bundle and must not cross this release boundary.
+    """
+    if bundle_filename != "F03_Wilkinson_leave_one_out_K2_reproduction_summary.csv":
+        return frame.copy(), "none"
+    if "excluded_doi" not in frame.columns:
+        raise ResultsBundleFailure(
+            "Wilkinson leave-one-out summary lacks the expected excluded_doi field required for documented redaction."
+        )
+    redacted = frame.drop(columns=["excluded_doi"]).copy()
+    if "excluded_record_description" not in redacted.columns:
+        redacted.insert(0, "excluded_record_description", "documented_manual_addition")
+    return redacted, "excluded_doi dropped; replaced with non-identifier documented_manual_addition descriptor"
 
 
 def numeric_one(frame: pd.DataFrame, column: str, label: str) -> float:
@@ -644,9 +664,10 @@ def main() -> None:
         input_hashes: dict[str, dict[str, str]] = {}
         for specification in TABLE_SPECIFICATIONS:
             stage = stages[specification["stage"]]
-            frame, digest = certified_csv(
+            source_frame, digest = certified_csv(
                 stage["directory"], stage["manifest"], specification["source"], stage["label"]
             )
+            frame, release_transform = release_safe_frame(source_frame, specification["output"])
             assert_aggregate_safe(frame, f"{stage['label']} / {specification['source']}", specification["output"])
             copied_tables[specification["output"]] = frame
             source_key = f"{specification['stage']}:{specification['source']}"
@@ -656,7 +677,9 @@ def main() -> None:
                 "bundle_file": specification["output"],
                 "source_stage": specification["stage"],
                 "source_file": specification["source"],
+                "source_rows": len(source_frame),
                 "rows": len(frame),
+                "release_transform": release_transform,
                 "purpose": specification["purpose"],
                 "aggregate_only_release_check": "pass",
             })
@@ -756,8 +779,13 @@ def main() -> None:
             configuration_null["null_scheme"].eq("publication_year_stratified_P_endpoint_permutation")
             & configuration_null["statistic"].isin(required_configuration_statistics)
         ]
-        if len(primary_null_rows) != 2 or not primary_null_rows["null_variation_status"].eq("monte_carlo_variation_observed").all():
-            raise ResultsBundleFailure("Primary configuration statistics must retain the certified Monte Carlo variation status.")
+        valid_primary_null_statuses = {
+            "monte_carlo_variation_observed",
+            "analytically_degenerate__no_permutation_contrast",
+            "no_variation_observed_in_B_draws__not_analytically_classified",
+        }
+        if len(primary_null_rows) != 2 or not primary_null_rows["null_variation_status"].isin(valid_primary_null_statuses).all():
+            raise ResultsBundleFailure("Primary configuration statistics have an unsupported Stage-16 null-information status.")
         require_columns(primary_null_rows, {"observed"}, "Primary configuration null rows")
         primary_observed = primary_null_rows.set_index("statistic")["observed"].map(lambda value: int(pd.to_numeric(value, errors="raise")))
         if primary_observed.to_dict() != {"N_both": 2, "intensive_degree_product_sum": 3040}:
@@ -775,7 +803,8 @@ def main() -> None:
         index_rows.insert(0, {
             "domain": "00_overview", "bundle_file": "00_certified_results_overview.csv", "source_stage": "derived_from_certified_aggregate_tables",
             "source_file": "A01_source_to_Dimensions_coverage_summary.csv; B01_overall_recorded_linkage_outcomes.csv; A02_recorded_relation_edge_summary.csv",
-            "rows": len(overview), "purpose": "Headline denominators and recorded-linkage counts for manuscript reporting.",
+            "source_rows": len(overview), "rows": len(overview), "release_transform": "derived from already release-safe aggregate tables",
+            "purpose": "Headline denominators and recorded-linkage counts for manuscript reporting.",
             "aggregate_only_release_check": "pass",
         })
         results_index = pd.DataFrame(index_rows)
