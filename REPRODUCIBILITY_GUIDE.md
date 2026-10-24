@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository is a **data-free computational and documentation release**. It preserves the project design, environment definition, source-curation procedure, and implementation contracts while deliberately excluding research inputs, Dimensions exports, record-level matching material, and derived analytical results.
+This repository is a reproducibility release that deliberately excludes research inputs, Dimensions exports, record-level matching material, and record-level analytical results. It may include explicitly reviewed, component-level aggregate outputs that contain no source records, identifiers, bibliographic text, entities, or edges.
 
 ## What a permitted local workspace contains
 
@@ -12,9 +12,9 @@ A private local workspace may contain, outside Git-tracked files:
 2. the curated source cohort after the documented Wilkinson et al. (2016) addition;
 3. `dimensions_api_key.txt`, held outside version control;
 4. Dimensions raw retrieval responses and matching audit files;
-5. private project outputs, including NMF diagnostics and later linked-data outputs.
+5. private project outputs, including corpus text, publication-level assignments, and later linked-data outputs.
 
-None of those materials may be committed without an explicit, separate release decision.
+None of those materials may be committed without an explicit, separate release decision. The reviewed aggregate NMF release in `derived_outputs/thematic/` is the current exception; its allowed files and data boundary are documented in that directory's README and enforced by the release-boundary checker.
 
 ## Environment
 
@@ -56,7 +56,7 @@ git diff --cached --name-only
 git diff --cached --check
 ```
 
-A safe commit should contain only source code, documentation, query templates, environment definitions, and empty-directory README files. It must not contain a credential, data export, API response, row-level record, title/abstract corpus, matching result, derived output, or figure.
+A safe commit may contain source code, documentation, query templates, environment definitions, and explicitly reviewed non-record-level aggregate outputs. It must not contain a credential, source/data export, API response, row-level record, title/abstract corpus, identifier-level matching result, publication assignment, relation edge, or unreviewed figure.
 
 ## NMF methodological boundary
 

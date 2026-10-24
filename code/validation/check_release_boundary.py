@@ -23,8 +23,18 @@ FORBIDDEN_PREFIXES = (
 ALLOWED_READMES = {
     "data/README.md",
     "derived_outputs/README.md",
+    "derived_outputs/thematic/README.md",
     "figures/README.md",
     "manuscript/README.md",
+}
+ALLOWED_AGGREGATE_OUTPUTS = {
+    "derived_outputs/thematic/topic_model_summary.csv",
+    "derived_outputs/thematic/topic_sizes.csv",
+    "derived_outputs/thematic/topic_terms.csv",
+    "derived_outputs/thematic/topic_stability_detail.csv",
+    "derived_outputs/thematic/bipole_screen.csv",
+    "derived_outputs/thematic/validation_checks.csv",
+    "derived_outputs/thematic/topic_2_to_3_crosswalk.csv",
 }
 FORBIDDEN_SUFFIXES = (
     ".csv", ".tsv", ".xlsx", ".xls", ".json", ".pkl", ".pickle",
@@ -53,7 +63,7 @@ def main() -> None:
     violations: list[str] = []
     for path in staged_files():
         name = path.as_posix()
-        if name in ALLOWED_READMES:
+        if name in ALLOWED_READMES or name in ALLOWED_AGGREGATE_OUTPUTS:
             continue
         if name.startswith(FORBIDDEN_PREFIXES):
             violations.append(f"protected directory: {name}")
@@ -71,7 +81,7 @@ def main() -> None:
         raise SystemExit(1)
 
     print("RELEASE BOUNDARY: PASS")
-    print("No staged data/output file or obvious credential marker was detected.")
+    print("No prohibited data/output file or obvious credential marker was detected.")
 
 
 if __name__ == "__main__":

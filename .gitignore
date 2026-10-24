@@ -19,7 +19,8 @@ __pycache__/
 .vscode/
 .idea/
 
-# Local data: keep only explanatory README files under protected directories
+# Source and record-level data remain local. Reviewed, non-record-level NMF
+# aggregates are explicitly unignored at the end of this file.
 /data/*
 !/data/README.md
 /derived_outputs/*
@@ -58,3 +59,15 @@ __pycache__/
 *.jpeg
 *.svg
 *.eps
+
+# Reviewed non-record-level NMF outputs permitted for reproducibility.
+# These exceptions must remain below the broad CSV and derived-output rules.
+!/derived_outputs/thematic/
+!/derived_outputs/thematic/README.md
+!/derived_outputs/thematic/topic_model_summary.csv
+!/derived_outputs/thematic/topic_sizes.csv
+!/derived_outputs/thematic/topic_terms.csv
+!/derived_outputs/thematic/topic_stability_detail.csv
+!/derived_outputs/thematic/bipole_screen.csv
+!/derived_outputs/thematic/validation_checks.csv
+!/derived_outputs/thematic/topic_2_to_3_crosswalk.csv

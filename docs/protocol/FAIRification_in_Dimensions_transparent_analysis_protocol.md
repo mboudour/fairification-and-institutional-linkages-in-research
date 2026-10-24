@@ -78,13 +78,15 @@ Only after \(P\) is frozen will the project retrieve the relations required for 
 
 The Dimensions retrieval and stored project outputs must comply with the applicable institutional licence and Dimensions reasonable-use terms. The project will retain what is necessary for this defined analysis and will not represent the local extract as an alternative copy of Dimensions.
 
-## Outcome-blind NMF of the two broad FAIRification themes
+## Outcome-blind NMF of FAIRification themes
+
+**Decision implementation update (2026-10-24).** The planned K=2 question and K=3/K=4 diagnostics were run before any relational-outcome retrieval or analysis. The frozen primary specification is K=3: institutional stewardship/research-data management/open-science practice; technical metadata/semantic infrastructure/reproducible workflows; and a small digital-cultural-heritage/collections/preservation specialization. K=2 is retained only as a coarsened sensitivity framing and K=4 is rejected. The complete rationale, caveats, and locked analytical role are in [`docs/thematic/FAIRification_NMF_theme_decision.md`](../thematic/FAIRification_NMF_theme_decision.md). The original planned decision logic is retained below for auditability.
 
 The NMF is the first substantive analysis of \(P\). Grants, policy documents, funders, policy issuers, institutions, countries, citations, and link outcomes are not read by the NMF script.
 
 The primary model uses concatenated title and abstract text, with the title given modest extra weight as in `publication_topic_model_diagnostic.py`. Retrieval-anchor language will be removed before vectorisation so the model does not rediscover the query. This includes the FAIR expressions that defined the source cohort—such as `FAIR`, `FAIR data`, `FAIR principle`, `FAIRification`, and the expanded FAIR words where present. Standard scholarly stopwords will also be removed. Terms that might differentiate FAIR research, such as *metadata*, *interoperability*, *repository*, *curation*, *licensing*, *privacy*, *ontology*, *assessment*, or *workflow*, will not be removed merely because they are expected to be important.
 
-The primary question is a **two-component NMF**. The working hypothesis, not a pre-assigned conclusion, is that the two components may distinguish a more technical/machine-actionable FAIR orientation from a stewardship, governance, and implementation orientation. This label will not be adopted unless it is supported by topic terms and blinded document packets.
+The primary planned question is a **two-component NMF**. The working hypothesis, not a pre-assigned conclusion, is that the two components may distinguish a more technical/machine-actionable FAIR orientation from a stewardship, governance, and implementation orientation. This label will not be adopted unless it is supported by topic terms and blinded document packets. The completed diagnostic determined that K=3 was the more informative primary specification; see the dated decision implementation update above.
 
 The protocol also fits \(K=3\) and \(K=4\) as diagnostic alternatives. A two-theme account is retained only if both components are sufficiently populated, stable under document resampling, interpretable from their top terms and document packets, and not revealed by the higher-\(K\) models to be an unhelpful merger of distinct themes. The NMF outputs preserve continuous theme shares, dominant-theme assignment, assignment margin, entropy, top terms, and high-membership/typical-paper review packets.
 

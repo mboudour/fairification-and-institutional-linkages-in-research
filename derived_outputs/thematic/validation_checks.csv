@@ -1,0 +1,8 @@
+﻿"check","failures"
+"NMF input includes exactly 144 Dimensions-recovered records","0"
+"Every NMF input record has a Dimensions title","0"
+"TF-IDF has one row per publication","0"
+"TF-IDF vocabulary is nonempty","0"
+"One assignment table exists for every requested K","0"
+"Every bootstrap topic comparison completed","0"
+"Exactly one Wilkinson record was excluded in leave-one-out sensitivity","0"

@@ -8,7 +8,7 @@ Reproducibility repository for a publication-centred study of FAIRification, res
 
 The project starts from a curated external source cohort and constructs a high-confidence Dimensions-recovered publication anchor through deterministic DOI-first matching. Publication titles and abstracts are then used—before any relational outcomes are examined—to diagnose FAIRification thematic structure with nonnegative matrix factorization (NMF). Later project stages will examine Dimensions-recorded publication–grant and publication–policy-document relations, alongside descriptive institutional annotations.
 
-This repository intentionally contains **no research data**. It does not contain source CSV files, Dimensions API responses, publication-level exports, record-level match tables, abstracts, topic assignments, derived outputs, figures based on data, credentials, or a manuscript-result package.
+This repository intentionally contains **no source or record-level research data**. It does not contain source CSV files, Dimensions API responses, publication-level exports, record-level match tables, abstracts, topic assignments, credentials, or a manuscript-result package. It does contain a small set of reviewed, component-level NMF diagnostic aggregates that cannot identify publications or entities.
 
 ## Data provenance and current study population
 
@@ -33,7 +33,13 @@ Dimensions is used for a new, separate relational enrichment of the frozen sourc
 - The remaining **19** source records are retained in the matching audit but excluded from the primary Dimensions publication anchor: 15 have no source DOI and 4 did not return a Dimensions candidate in the DOI-first procedure.
 - The initial Dimensions publication-text subset contains title metadata for all 144 matched records and abstracts for 140 of them. It is used for outcome-blind thematic diagnostics before retrieval of grant, policy-document, citation, funder, organization, country, or other relational layers.
 
-All source and Dimensions record-level materials, raw API responses, matching tables, and derived outputs remain local and excluded from version control.
+All source and Dimensions record-level materials, raw API responses, matching tables, publication assignments, titles, abstracts, and relation edges remain local and excluded from version control.
+
+## Frozen outcome-blind NMF decision
+
+Before any grant, policy-document, citation, funder, organization, country, affiliation, or linkage variable was retrieved or inspected, the publication-text diagnostic compared K=2, K=3, and K=4 NMF solutions. The primary specification is **K=3**: **institutional stewardship, research-data management, and open-science practice** (51 publications; 35.4%); **technical metadata, semantic infrastructure, and reproducible workflows** (80; 55.6%); and **digital cultural heritage, collections, and preservation** (13; 9.0%).
+
+The result is a two-level account—two broad orientations plus a smaller specialist theme—not a forced analogue of the prior AI–mental-health partition. K=2 is retained only as a coarsened sensitivity framing. K=4 is rejected because it adds an unstable three-publication event-series component. The smaller heritage/preservation component is semantically coherent but has one bootstrap non-reproduction and is interpreted cautiously. The complete rationale, diagnostics, caveats, and locked analytical use are recorded in the [frozen NMF theme-decision record](docs/thematic/FAIRification_NMF_theme_decision.md).
 
 ## Repository layout
 
@@ -50,7 +56,7 @@ docs/
   source_curation/    Documentation of the foundational FAIR Principles record
 queries/              Reusable Dimensions DSL templates; no retrieved results
 data/                 Local-only data location; ignored except this README
-derived_outputs/      Local-only computed outputs; ignored except this README
+derived_outputs/      Reviewed aggregate outputs only; record-level outputs remain local
 figures/              Local-only data-derived figures; ignored except this README
 manuscript/           Reserved for manuscript source, not results or data
 tools/                Utility scripts
@@ -63,14 +69,14 @@ Never commit any of the following:
 
 - source cohorts or manually curated source exports;
 - Dimensions raw responses, matching tables, record-level metadata, abstracts, or API-output manifests;
-- output tables, serialized objects, topic assignments, record-level review packets, figures, or manuscript result files derived from non-public data;
+- source or record-level output tables, serialized objects, topic assignments, record-level review packets, unreviewed figures, or manuscript result files derived from non-public data;
 - `dimensions_api_key.txt`, authentication tokens, environment files containing secrets, or notebook checkpoints.
 
-The `.gitignore` is intentionally restrictive. Keep research inputs and outputs in the local `data/`, `derived_outputs/`, `figures/`, and `manuscript/` directories only.
+The `.gitignore` is intentionally restrictive. Keep research inputs and record-level outputs in local protected directories. Only specifically reviewed component-level aggregate outputs, currently in `derived_outputs/thematic/`, may be committed after passing the repository release-boundary check.
 
 ## Current project boundary
 
-The repository currently records the methodological and computational foundation through the publication-only NMF stage. It does not claim that later grant, policy-document, citation, funder, organization, country, or linkage analyses have been completed or released.
+The repository currently records the methodological and computational foundation through the frozen publication-only K=3 NMF decision. It does not claim that later grant, policy-document, citation, funder, organization, country, or linkage analyses have been completed or released.
 
 ## Local environment
 
@@ -92,7 +98,7 @@ Run the local dashboard with:
 streamlit run streamlit_app.py
 ```
 
-The dashboard is safe to commit because it contains no research data and does not authenticate to Dimensions. It documents the study design and can render optional **local-only aggregate NMF outputs** if they are placed in `derived_outputs/private_nmf/`, which is ignored by Git. It does not require, expose, or transmit raw source or Dimensions records.
+The dashboard is safe to commit because it does not authenticate to Dimensions or read raw source/Dimensions records. It documents the study design and displays the reviewed component-level NMF aggregates in `derived_outputs/thematic/`. It does not require, expose, or transmit source data, record-level metadata, or relation edges.
 
 ## Attribution
 
