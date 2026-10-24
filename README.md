@@ -2,7 +2,7 @@
 
 **Moses Boudourides**
 
-Private, data-free reproducibility repository for a publication-centred study of FAIRification, research-data stewardship, and Dimensions-recorded institutional linkages.
+Reproducibility repository for a publication-centred study of FAIRification, research-data stewardship, and Dimensions-recorded institutional linkages.
 
 ## Scope
 
@@ -83,6 +83,8 @@ python code/setup/verify_fairification_environment.py
 See [the Mac setup guide](docs/setup/Mac_local_environment_guide.md) and [the transparent protocol](docs/protocol/FAIRification_in_Dimensions_transparent_analysis_protocol.md) for the full workflow and data-handling boundaries.
 
 ## Companion Streamlit dashboard
+
+The companion application is provided in [`streamlit_app.py`](streamlit_app.py). A live Streamlit Community Cloud deployment has **not** yet been created, so there is no live-app URL at this stage. The live link will be added only after the FAIRification project has its completed, reviewed, data-safe aggregate outputs, figures, and dashboard panels—following the same release structure as the completed AI–mental-health project.
 
 Run the local dashboard with:
 
