@@ -6,7 +6,7 @@ Reproducibility repository for a publication-centred study of FAIRification, res
 
 ## Study in brief
 
-The project starts from a curated external source cohort and constructs a high-confidence Dimensions publication anchor through deterministic DOI-first matching. Publication titles and abstracts are then used—before relational outcomes are examined—to diagnose FAIRification thematic structure with nonnegative matrix factorization (NMF). The completed relational stage examines Dimensions-recorded publication–grant and publication–policy-document links, descriptive role-separated network summaries, and local grant–policy configuration patterns.
+The project starts from a curated external source cohort and constructs a high-confidence Dimensions publication anchor through deterministic DOI-first matching. Publication titles and abstracts are then used—before relational outcomes are examined—to diagnose FAIRification thematic structure with nonnegative matrix factorization (NMF). The completed relational stage examines Dimensions-recorded publication–grant and publication–policy-document links, descriptive role-separated network summaries, local institution/country landscapes, and local grant–policy configuration patterns.
 
 The study does not interpret recorded grant or policy links as causal effects, funding intent, policy uptake, endorsement, impact, or institutional influence.
 
@@ -40,6 +40,10 @@ The repository contains a deliberately limited, reviewed release of 26 aggregate
 
 See the [aggregate-results release note](docs/release/AGGREGATE_RESULTS_RELEASE.md) for the release review, scope, and exclusions. The `results_bundle_index.csv` retained in the aggregate folder documents table-level source-stage provenance without device-local paths or identifiers.
 
+## Local institution and country restoration
+
+The local-only restoration stage reproduces the role-separated institution and country material that was excluded from the initial aggregate-only reporting bundle: publication affiliations, grant funders, grant recipients, and policy issuers; P--PI, G--GI, and D--DI relation networks; and full-anchor/K=3 descriptive landscapes. It is implemented in [`19_restore_institution_country_landscapes.py`](code/analysis/19_restore_institution_country_landscapes.py) and [`20_generate_institution_country_figures.py`](code/reporting/20_generate_institution_country_figures.py). The scripts make no API requests but require the protected local P/G/D tables and audited edge lists created by the preceding pipeline. Their organization- and country-named outputs remain local; only the scripts and their [method contract](docs/analysis/FAIRification_institution_country_restoration_contract.md) are public.
+
 ## Repository layout
 
 ```text
@@ -47,8 +51,8 @@ code/
   matching/            DOI-first matching design and API-safety notes
   thematic/            Publication-text NMF preparation and diagnostics
   relational/          Local relational retrieval and audit scripts
-  analysis/            Local association, timing, network, and configuration scripts
-  reporting/           Certified bundle and figure scripts
+  analysis/            Local association, timing, network, configuration, and institution/country scripts
+  reporting/           Certified bundle, core-figure, and local institution/country-figure scripts
   validation/          Repository release-boundary check
 docs/
   protocol/            Transparent analysis protocol
