@@ -8,6 +8,31 @@ The project starts from a curated external source cohort and constructs a high-c
 
 This repository intentionally contains **no research data**. It does not contain source CSV files, Dimensions API responses, publication-level exports, record-level match tables, abstracts, topic assignments, derived outputs, figures based on data, credentials, or a manuscript-result package.
 
+## Data provenance and current study population
+
+### Scopus source study
+
+The source bibliographic design is drawn from Papachristopoulos, Sfakakis, and Papatheodorou's Scopus-based study of FAIR data and libraries:
+
+> Papachristopoulos, L., Sfakakis, M., & Papatheodorou, C. (2026). *Who Cares About FAIR Data? Libraries in the Ecosystem of FAIRification*. **Metrics, 3**, 22. https://doi.org/10.3390/metrics3040022
+
+That study's broad corpus contains **2,790** English-language journal articles and conference papers published from **2000–2025**, retrieved in Scopus using explicit FAIR-focused expressions (`FAIR data`, `FAIR principle`, `fairification`, or `Findable Accessible Interoperable Reusable`). Its library-focused subset adds `library` or `libraries` to the title/abstract/keyword search and contains **162** records. The source paper analyzes this literature bibliometrically with Bibliometrix; it does not use Dimensions links.
+
+### This project's curated source cohort
+
+This project begins from the shared 162-record library-focused Scopus export, rather than from the paper's full 2,790-record corpus. The source export did not contain the foundational article by Wilkinson et al., *The FAIR Guiding Principles for scientific data management and stewardship* (2016), DOI `10.1038/sdata.2016.18`. A documented, reproducible manual addition produces a frozen **163-record** source cohort. The original export, the curated cohort, and the associated curation manifest remain private and are not distributed here.
+
+### Dimensions-recovered analytic subset
+
+Dimensions is used for a new, separate relational enrichment of the frozen source cohort. It is not treated as a replacement for Scopus and the project does not assert that unrecovered records are absent from Dimensions.
+
+- A deterministic DOI-first procedure queried the 148 source records with a DOI.
+- **144 of the 163** curated source records were accepted as unambiguous, one-to-one exact DOI matches in Dimensions (**88.34%** source-cohort recovery).
+- The remaining **19** source records are retained in the matching audit but excluded from the primary Dimensions publication anchor: 15 have no source DOI and 4 did not return a Dimensions candidate in the DOI-first procedure.
+- The initial Dimensions publication-text subset contains title metadata for all 144 matched records and abstracts for 140 of them. It is used for outcome-blind thematic diagnostics before retrieval of grant, policy-document, citation, funder, organization, country, or other relational layers.
+
+All source and Dimensions record-level materials, raw API responses, matching tables, and derived outputs remain local and excluded from version control.
+
 ## Repository layout
 
 ```text
