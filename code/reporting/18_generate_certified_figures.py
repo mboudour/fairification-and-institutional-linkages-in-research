@@ -36,7 +36,7 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "18_generate_certified_figures_1.2"
+SCRIPT_VERSION = "18_generate_certified_figures_1.3"
 REQUIRED_BUNDLE_STAGE = "17_build_certified_results_bundle_1.0"
 EXPECTED_SOURCE_RECORDS = 163
 EXPECTED_PUBLICATION_RECORDS = 144
@@ -625,14 +625,14 @@ def figure_1_scope_and_layers(tables: dict[str, pd.DataFrame], output_dir: Path)
 
     draw_box(ax, 2.0, 1.5, 2.35, 1.13, f"Grant-linked P\n{grant_n} publications", LIGHT_GOLD)
     draw_box(ax, 6.0, 1.5, 2.35, 1.13, f"Policy-linked P\n{policy_n} publications", LIGHT_PURPLE)
-    draw_box(ax, 10.45, 1.5, 2.0, 1.13, "Policy issuers\nrole-separated context", "#E6ECF2")
+    draw_box(ax, 11.00, 1.5, 1.6, 1.13, "Policy issuers\nrole-separated context", "#E6ECF2")
     arrow(ax, (4.35, 5.25), (3.18, 2.67))
     arrow(ax, (5.25, 5.25), (7.18, 2.67))
-    arrow(ax, (8.38, 2.06), (10.40, 2.06))
+    arrow(ax, (8.40, 2.06), (10.95, 2.06))
 
     ax.text(2.25, 3.65, f"P–G: {int(edges['publication_grant'])} recorded\nidentifier edges", ha="center", va="center", fontsize=9, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
     ax.text(7.62, 3.65, f"P–D: {int(edges['publication_policy_document'])} recorded\nidentifier edges", ha="center", va="center", fontsize=9, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
-    ax.text(9.40, 2.95, f"Issuer–P: {int(edges['policy_issuer_publication'])}\nunique role-separated edges", ha="center", va="center", fontsize=8.5, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
+    ax.text(9.68, 3.92, f"Issuer–P: {int(edges['policy_issuer_publication'])} unique role-separated edges", ha="center", va="center", fontsize=8.3, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
     return save_figure(fig, output_dir, "figure_1_study_scope_and_relation_layers")
 
 

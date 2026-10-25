@@ -14,3 +14,9 @@ Record-year bars include only recorded relation edges with both stored years; mi
 
 ## Figure 5. Year-stratified cross-relation configurations
 Observed P–G/P–D configurations are compared with the primary null that permutes P–D publication endpoint mappings within publication-year strata while holding P–G ties fixed. The result concerns structural alignment of recorded relations only; it does not identify a grant-to-policy pathway.
+
+## Figure 6. Country representation across FAIRification publication themes
+For each of the publication-affiliation and grant-funder views, the eight most represented stored countries are selected from the full anchor and then displayed as the percentage of publications in each dominant K=3 theme with the relevant recorded country attribute. Country memberships are non-exclusive. The policy-issuer panel is omitted because only four retained publications have a recorded issuer path; this display decision is not evidence of missing policy documents or issuers.
+
+## Figure 7. Institutional representation across FAIRification publication themes
+For each of the publication-affiliation and grant-funder views, the eight most represented stored organizations are selected from the full anchor and then displayed as the percentage of publications in each dominant K=3 theme with the relevant recorded organization. Organization identities remain role-specific and are not merged by name. The policy-issuer panel is omitted because only four retained publications have a recorded issuer path. These descriptive landscapes do not measure institutional influence, funding intent, policy uptake, or impact.

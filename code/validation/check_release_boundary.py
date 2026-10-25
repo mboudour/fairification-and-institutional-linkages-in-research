@@ -38,6 +38,7 @@ RELEASED_RESULT_FILES = {
     "G01_observed_P_G_P_D_configurations.csv",
     "G02_year_stratified_cross_relation_null_summary.csv",
     "G03_issuer_attribution_coverage.csv",
+    "H01_role_separated_institution_country_scope.csv",
     "results_bundle_index.csv",
     "results_bundle_validation_checks.csv",
 }
@@ -47,6 +48,8 @@ FIGURE_STEMS = {
     "figure_3_primary_grant_link_associations",
     "figure_4_record_year_context_and_policy_adequacy",
     "figure_5_cross_relation_configurations",
+    "figure_6_country_landscapes",
+    "figure_7_institution_landscapes",
 }
 ALLOWED_READMES = {
     "data/README.md",
@@ -66,6 +69,7 @@ ALLOWED_AGGREGATE_OUTPUTS = {
 } | {f"derived_outputs/released_results/{name}" for name in RELEASED_RESULT_FILES}
 ALLOWED_PUBLIC_FILES = {
     "docs/release/AGGREGATE_RESULTS_RELEASE.md",
+    "docs/release/INSTITUTION_COUNTRY_RESULTS_RELEASE.md",
     "figures/manuscript/figure_captions.md",
 }
 ALLOWED_PUBLIC_FILES |= {

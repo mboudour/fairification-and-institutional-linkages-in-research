@@ -55,7 +55,7 @@ Stage 19 writes these protected local tables:
 - theme-level scope summaries and a non-identifier aggregate scope summary;
 - validation checks and a SHA-256 input/output manifest.
 
-`code/reporting/20_generate_institution_country_figures.py` then creates local-only Figure 6 (country landscapes) and Figure 7 (institutional landscapes). The top targets are selected in each plotted relation from the all-anchor view before their K=3 cells are plotted. The figures display only publication-affiliation and grant-funder panels. Policy-issuer coverage is reported in each figure caption rather than as a sparse third panel; this is a display decision and is not evidence of missing policy documents or issuers.
+`code/reporting/20_generate_institution_country_figures.py` then creates local-only Figure 6 (country landscapes) and Figure 7 (institutional landscapes). The top targets are selected in each plotted relation from the all-anchor view before their K=3 cells are plotted. The figures display only publication-affiliation and grant-funder panels. Narrative captions, including the sparse policy-issuer display boundary, are supplied only in the manuscript TeX source; they are not embedded in, or generated beside, the figure files.
 
 ## Local execution
 
@@ -90,4 +90,6 @@ These outputs describe Dimensions-recorded identifiers, stored organization/coun
 
 ## Public-release boundary
 
-The Stage 19 and 20 **code and this contract** are public. Their actual local outputs contain protected record-level identifiers and named organization/country attributes and are not committed to GitHub. Any future aggregate-only public release requires a separate review and an explicit update to `check_release_boundary.py`; names, IDs, publication-level paths, node lists, and edge lists remain excluded.
+The Stage 19 and 20 **code and this contract** are public. Following a separate review of the completed 2026-10-25 run, the repository also releases the non-identifier aggregate scope table `H01_role_separated_institution_country_scope.csv` and the two caption-free manuscript figures (`figure_6_country_landscapes` and `figure_7_institution_landscapes`, PNG/PDF). The figures contain only selected role-specific organization and country labels needed for the reviewed descriptive display.
+
+The local Stage 19 and Stage 20 directories remain excluded. In particular, publication-, grant-, policy-document-, organization-, and issuer-level identifiers; publication-level paths; node lists; edge lists; full named representation tables; and raw local inputs are not committed. Any additional release requires a separate review and an explicit update to `check_release_boundary.py`.

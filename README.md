@@ -34,15 +34,17 @@ Among the 144 anchor publications, 52 (36.111%) have a Dimensions-recorded grant
 
 Policy links are too sparse for the predeclared multivariable policy model: the primary through-2022 window contains 3 events among 72 publications, below the 30-event adequacy threshold. The primary publication-year-stratified configuration test shows no evidence that the observed publication overlap of recorded grant and policy links exceeds its year-conditioned null.
 
+The reviewed institution/country restoration finds stored affiliation organizations for 128 publications (313 organizations across 46 stored countries) and recorded grant-funder representation for 52 publications (47 organizations across 17 stored countries). The policy-issuer path reaches 44 organizations and 19 stored countries through only four publications, so it is retained as sparse descriptive context rather than plotted. The country and organization landscapes preserve these roles and do not measure institutional influence, funding allocation, country effects, policy uptake, or impact.
+
 ## Reviewed aggregate-only release
 
-The repository contains a deliberately limited, reviewed release of 26 aggregate result tables in [`derived_outputs/released_results/`](derived_outputs/released_results/) and five reviewed figures in [`figures/manuscript/`](figures/manuscript/). The release includes no source records, Dimensions API responses, publication text, identifiers, matching records, publication-level assignments, organization names, node lists, or edge lists.
+The repository contains a deliberately limited, reviewed release of 27 aggregate result tables in [`derived_outputs/released_results/`](derived_outputs/released_results/) and seven reviewed figures in [`figures/manuscript/`](figures/manuscript/). The release includes no source records, Dimensions API responses, publication text, identifiers, matching records, publication-level assignments, node lists, or edge lists. Figures 6--7 are a narrowly reviewed exception: they contain selected, role-specific organization and country labels for descriptive manuscript figures, not a full named representation table.
 
-See the [aggregate-results release note](docs/release/AGGREGATE_RESULTS_RELEASE.md) for the release review, scope, and exclusions. The `results_bundle_index.csv` retained in the aggregate folder documents table-level source-stage provenance without device-local paths or identifiers.
+See the [aggregate-results release note](docs/release/AGGREGATE_RESULTS_RELEASE.md) and the [institution-country results release note](docs/release/INSTITUTION_COUNTRY_RESULTS_RELEASE.md) for the review, scope, and exclusions. The `results_bundle_index.csv` retained in the aggregate folder documents table-level source-stage provenance without device-local paths or identifiers.
 
-## Local institution and country restoration
+## Institution and country restoration and release boundary
 
-The local-only restoration stage reproduces the role-separated institution and country material that was excluded from the initial aggregate-only reporting bundle: publication affiliations, grant funders, grant recipients, and policy issuers; P--PI, G--GI, and D--DI relation networks; and full-anchor/K=3 descriptive landscapes. It is implemented in [`19_restore_institution_country_landscapes.py`](code/analysis/19_restore_institution_country_landscapes.py) and [`20_generate_institution_country_figures.py`](code/reporting/20_generate_institution_country_figures.py). The scripts make no API requests but require the protected local P/G/D tables and audited edge lists created by the preceding pipeline. Their organization- and country-named outputs remain local; only the scripts and their [method contract](docs/analysis/FAIRification_institution_country_restoration_contract.md) are public.
+The local restoration stage reproduces role-separated publication affiliations, grant funders, grant recipients, and policy issuers; P--PI, G--GI, and D--DI relation networks; and full-anchor/K=3 descriptive landscapes. It is implemented in [`19_restore_institution_country_landscapes.py`](code/analysis/19_restore_institution_country_landscapes.py) and [`20_generate_institution_country_figures.py`](code/reporting/20_generate_institution_country_figures.py). The scripts make no API requests but require the protected local P/G/D tables and audited edge lists created by the preceding pipeline. The public release is limited to aggregate scope table `H01` and Figures 6--7 after review; all local identifier-level outputs and full named representation tables remain excluded. See the [method contract](docs/analysis/FAIRification_institution_country_restoration_contract.md).
 
 ## Repository layout
 
@@ -67,7 +69,7 @@ figures/
 
 ## Data and credential protection
 
-Never commit source cohorts, Dimensions raw responses, record-level matching tables, publication metadata, abstracts, publication-level assignments, identifiers, organization or issuer names, node lists, edge lists, manuscript source, or `dimensions_api_key.txt`. The `.gitignore` and [`check_release_boundary.py`](code/validation/check_release_boundary.py) permit only named reviewed aggregate tables and figures after release review.
+Never commit source cohorts, Dimensions raw responses, record-level matching tables, publication metadata, abstracts, publication-level assignments, identifiers, full organization or issuer representation tables, node lists, edge lists, manuscript source, or `dimensions_api_key.txt`. Selected organization/country labels are permitted only in the reviewed Figures 6--7. The `.gitignore` and [`check_release_boundary.py`](code/validation/check_release_boundary.py) permit only named reviewed aggregate tables and figures after release review.
 
 ## Attribution
 
