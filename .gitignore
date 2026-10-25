@@ -27,7 +27,6 @@ __pycache__/
 /figures/*
 !/figures/README.md
 /manuscript/*
-!/manuscript/README.md
 
 # Raw Dimensions/API material wherever it is written
 **/02_dimensions_raw/
@@ -82,4 +81,6 @@ __pycache__/
 !/figures/manuscript/figure_captions.md
 
 # Manuscript source, bibliography, figures, and build products remain outside GitHub.
+# The reviewed uploaded draft PDF is the sole exception in this folder.
 /manuscript/*
+!/manuscript/draft_October2026.pdf

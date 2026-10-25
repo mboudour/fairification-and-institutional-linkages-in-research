@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Check staged files against the FAIRification aggregate-only release boundary.
 
-The repository excludes all source, record-level, and manuscript material. A
-narrow, reviewed exception permits named aggregate result tables and figures
-after human review.
+The repository excludes all source, record-level, and manuscript material. Narrow,
+reviewed exceptions permit named aggregate result tables, figures, and one uploaded
+manuscript PDF after human review.
 """
 
 from __future__ import annotations
@@ -71,6 +71,7 @@ ALLOWED_PUBLIC_FILES = {
     "docs/release/AGGREGATE_RESULTS_RELEASE.md",
     "docs/release/INSTITUTION_COUNTRY_RESULTS_RELEASE.md",
     "figures/manuscript/figure_captions.md",
+    "manuscript/draft_October2026.pdf",
 }
 ALLOWED_PUBLIC_FILES |= {
     f"figures/manuscript/{stem}.{suffix}"
@@ -142,7 +143,7 @@ def main() -> None:
         raise SystemExit(1)
 
     print("RELEASE BOUNDARY: PASS")
-    print("Only named reviewed aggregate outputs and reviewed figures are staged.")
+    print("Only named reviewed aggregates, reviewed figures, and approved manuscript PDFs are staged.")
 
 
 if __name__ == "__main__":
