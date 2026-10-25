@@ -4,7 +4,9 @@
 This script accepts only the output directory created by
 ``17_build_certified_results_bundle.py``. It verifies every input table against
 that bundle's SHA-256 manifest, does not access any raw or record-level output,
-and creates a local-only figure directory outside the Git worktree.
+and creates a local-only figure directory outside the Git worktree. Narrative
+captions are supplied by the manuscript TeX source rather than embedded in the
+figure files.
 
 Example:
     python code/reporting/18_generate_certified_figures.py \
@@ -34,7 +36,7 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "18_generate_certified_figures_1.1"
+SCRIPT_VERSION = "18_generate_certified_figures_1.2"
 REQUIRED_BUNDLE_STAGE = "17_build_certified_results_bundle_1.0"
 EXPECTED_SOURCE_RECORDS = 163
 EXPECTED_PUBLICATION_RECORDS = 144
@@ -200,7 +202,7 @@ def repository_root() -> Path | None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--bundle-dir", type=Path, required=True, help="Completed Script 17 certified results bundle.")
-    parser.add_argument("--output-dir", type=Path, required=True, help="New empty local directory for figures and captions.")
+    parser.add_argument("--output-dir", type=Path, required=True, help="New empty local directory for figures.")
     return parser.parse_args()
 
 
@@ -622,16 +624,15 @@ def figure_1_scope_and_layers(tables: dict[str, pd.DataFrame], output_dir: Path)
     ax.text(3.05, 6.15, f"{recovery:.3f}% recovered", ha="center", fontsize=8.5, color=MUTED)
 
     draw_box(ax, 2.0, 1.5, 2.35, 1.13, f"Grant-linked P\n{grant_n} publications", LIGHT_GOLD)
-    draw_box(ax, 6.1, 1.5, 2.35, 1.13, f"Policy-linked P\n{policy_n} publications", LIGHT_PURPLE)
-    draw_box(ax, 10.05, 1.5, 2.2, 1.13, "Policy issuers\nrole-separated context", "#E6ECF2")
+    draw_box(ax, 6.0, 1.5, 2.35, 1.13, f"Policy-linked P\n{policy_n} publications", LIGHT_PURPLE)
+    draw_box(ax, 10.45, 1.5, 2.0, 1.13, "Policy issuers\nrole-separated context", "#E6ECF2")
     arrow(ax, (4.35, 5.25), (3.18, 2.67))
-    arrow(ax, (5.25, 5.25), (7.28, 2.67))
-    arrow(ax, (8.48, 2.06), (10.0, 2.06))
+    arrow(ax, (5.25, 5.25), (7.18, 2.67))
+    arrow(ax, (8.38, 2.06), (10.40, 2.06))
 
     ax.text(2.25, 3.65, f"P–G: {int(edges['publication_grant'])} recorded\nidentifier edges", ha="center", va="center", fontsize=9, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
-    ax.text(7.68, 3.65, f"P–D: {int(edges['publication_policy_document'])} recorded\nidentifier edges", ha="center", va="center", fontsize=9, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
-    ax.text(10.95, 3.65, f"Issuer–P: {int(edges['policy_issuer_publication'])}\nunique role-separated edges", ha="center", va="center", fontsize=8.5, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
-    ax.text(0.45, 0.38, "All lines are Dimensions-recorded identifier relations. They are not measures of causality, funding intent, policy endorsement, uptake, or policy impact.", fontsize=8.6, color=MUTED)
+    ax.text(7.62, 3.65, f"P–D: {int(edges['publication_policy_document'])} recorded\nidentifier edges", ha="center", va="center", fontsize=9, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
+    ax.text(9.40, 2.95, f"Issuer–P: {int(edges['policy_issuer_publication'])}\nunique role-separated edges", ha="center", va="center", fontsize=8.5, color=NAVY, bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#B4C4D1"))
     return save_figure(fig, output_dir, "figure_1_study_scope_and_relation_layers")
 
 
@@ -682,7 +683,6 @@ def figure_2_supplementary_theme_rates(tables: dict[str, pd.DataFrame], output_d
     axes[1].grid(axis="y")
     axes[1].legend(frameon=False, fontsize=8.5, loc="upper right")
     fig.suptitle("K=3 FAIRification themes and recorded-linkage patterns", x=0.01, y=1.03, ha="left", fontsize=13, fontweight="bold")
-    fig.text(0.01, -0.03, "Hard assignments are supplementary descriptions only. Primary association models use continuous K=3 shares. Policy-link rates are sparse and are not used to fit a multivariable policy model.", fontsize=8.3, color=MUTED)
     return save_figure(fig, output_dir, "figure_2_supplementary_K3_theme_linkage_rates")
 
 
@@ -725,8 +725,7 @@ def figure_3_primary_grant_associations(tables: dict[str, pd.DataFrame], output_
     ax.grid(axis="x")
     for yy, estimate, lower, upper in zip(y, values, low, high):
         ax.text(maximum * 0.98, yy, f"{estimate:.2f} [{lower:.2f}, {upper:.2f}]", ha="right", va="center", fontsize=8.6)
-    ax.text(0.01, -0.23, "Year-adjusted primary model; technical metadata/semantic workflows are the reference. Associations are not causal effects.", transform=ax.transAxes, fontsize=8.5, color=MUTED)
-    fig.subplots_adjust(left=0.34, right=0.97, bottom=0.30, top=0.84)
+    fig.subplots_adjust(left=0.34, right=0.97, bottom=0.16, top=0.84)
     fig._fairification_layout_is_manual = True
     return save_figure(fig, output_dir, "figure_3_primary_grant_link_associations")
 
@@ -777,7 +776,6 @@ def figure_4_timing_and_policy_adequacy(tables: dict[str, pd.DataFrame], output_
         axes[1].text(index, event + 1.0, f"{int(event)}/{int(n_publications)}\nnot fit", ha="center", va="bottom", fontsize=8.2, color=PURPLE)
         axes[1].text(index, requirement + 1.0, f"{int(requirement)} required", ha="center", va="bottom", fontsize=7.6, color=GOLD)
     fig.suptitle("Record-year context and policy-link event adequacy", x=0.01, y=1.03, ha="left", fontsize=13, fontweight="bold")
-    fig.text(0.01, -0.05, "Bars include only recorded relation edges with both stored years; missing years are not imputed. Record-year differences are descriptive database dates, not causal lags or time to impact. Sparse policy links are reported descriptively rather than replaced with an opportunistic sparse regression.", fontsize=8.3, color=MUTED)
     return save_figure(fig, output_dir, "figure_4_record_year_context_and_policy_adequacy")
 
 
@@ -822,12 +820,7 @@ def figure_5_cross_relation_configurations(tables: dict[str, pd.DataFrame], outp
     null_panel(axes[1], n_both, "B. Extensive-margin alignment", "Publications with both P–G and P–D links")
     null_panel(axes[2], intensity, "C. Intensive-margin alignment", r"$\sum_p d_{PG}(p) d_{PD}(p)$")
     fig.suptitle("Year-stratified cross-relation configuration test", x=0.01, y=1.03, ha="left", fontsize=13, fontweight="bold")
-    fig.text(0.01, -0.05, "Primary null: P–D publication endpoints are reassigned within publication-year strata while P–G ties are fixed. This is a structural test of recorded link-layer alignment, not a causal funding-to-policy pathway.", fontsize=8.3, color=MUTED)
     return save_figure(fig, output_dir, "figure_5_cross_relation_configurations")
-
-
-def captions_markdown() -> str:
-    return """# FAIRification figure captions\n\n## Figure 1. Study scope and Dimensions-recorded relation layers\nThe frozen source cohort comprises 163 publications, of which 144 exact DOI-matched publications form the final Dimensions anchor. Grant and policy outcomes are Dimensions-recorded identifier links. The diagram is descriptive and does not represent funding intent, policy endorsement, uptake, or impact.\n\n## Figure 2. Supplementary K=3 theme linkage rates\nHard-assignment K=3 NMF component groupings and descriptive recorded-linkage rates are shown with Wilson 95% intervals. These hard-assignment summaries are supplementary only; primary association analyses use continuous NMF shares. K=3 stability is component-specific: the small heritage/preservation specialization carries a bootstrap caveat and has no K=3 leave-one-out result. Sparse policy-link counts do not support multivariable policy regression.\n\n## Figure 3. Primary grant-link associations\nOdds ratios are from the predeclared publication-year-adjusted model of a recorded grant link. NMF shares are scaled per ten percentage points and the technical metadata/semantic-workflow theme is the compositional reference. The estimates are conditional associations, not causal effects.\n\n## Figure 4. Record-year context and policy event adequacy\nRecord-year bars include only recorded relation edges with both stored years; missing years are not imputed. Stored record-year differences are descriptive database-date quantities rather than causal lags. The figure also shows why policy-link models are withheld: the primary through-2022 policy window has three observed events against a predeclared 30-event requirement.\n\n## Figure 5. Year-stratified cross-relation configurations\nObserved P–G/P–D configurations are compared with the primary null that permutes P–D publication endpoint mappings within publication-year strata while holding P–G ties fixed. The result concerns structural alignment of recorded relations only; it does not identify a grant-to-policy pathway.\n"""
 
 
 def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -874,15 +867,9 @@ def main() -> None:
             generated.extend(figure_3_primary_grant_associations(tables, temporary_output))
             generated.extend(figure_4_timing_and_policy_adequacy(tables, temporary_output))
             generated.extend(figure_5_cross_relation_configurations(tables, temporary_output))
-        atomic_write_text(temporary_output / "figure_captions.md", captions_markdown())
-
         output_hashes = {
             path.name: {"path": str(args.output_dir / path.name), "sha256": sha256(path)}
             for path in sorted(generated)
-        }
-        output_hashes["figure_captions.md"] = {
-            "path": str(args.output_dir / "figure_captions.md"),
-            "sha256": sha256(temporary_output / "figure_captions.md"),
         }
         manifest = {
             "stage": SCRIPT_VERSION,
@@ -901,7 +888,7 @@ def main() -> None:
                 "primary_policy_window": f"{EXPECTED_PRIMARY_POLICY_EVENTS} events among {EXPECTED_PRIMARY_POLICY_PUBLICATIONS} publications; model withheld below {EXPECTED_PRIMARY_POLICY_REQUIRED_EVENTS} required events",
             },
             "interpretive_boundary": "Figures reproduce only certified aggregate outputs. Grant and policy results are Dimensions-recorded identifier links, not causal effects, funding intent, policy endorsement, uptake, impact, institutional influence, or topical similarity. Record-year quantities are descriptive stored dates; the cross-relation test is structural rather than causal.",
-            "data_boundary": "Figures and captions are protected local derived outputs. They must not be committed to GitHub before a deliberate release decision. No raw or record-level data were read.",
+            "data_boundary": "Figures are protected local derived outputs. They must not be committed to GitHub before a deliberate release decision. No raw or record-level data were read.",
         }
         atomic_write_json(temporary_output / "figure_manifest.json", manifest)
         os.replace(temporary_output, args.output_dir)

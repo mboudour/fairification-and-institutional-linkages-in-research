@@ -10,7 +10,7 @@ It also rechecks the frozen project values: 163 curated source records, 144 exac
 
 The selected inputs are limited to aggregate scope, edge-count, linkage-outcome, K=3 supplementary theme, grant-association, record-year, policy-event-adequacy, and cross-relation configuration/null-summary tables. A second normalized-column firewall and table-specific row ceiling reject publication, grant, policy-document, DOI, title, abstract, author, organization, issuer, node, edge-list, textual-record, and disguised identifier fields such as `publicationId`. No publication, grant, policy-document, DOI, title, abstract, author, organization, issuer, node, edge-list, or permutation-replicate file is read.
 
-The script refuses to write figures inside either the Git worktree or the certified-bundle input directory. It uses a unique temporary staging directory and does not delete any pre-existing same-prefix directory. It writes atomically to a new local directory with a `figure_manifest.json` and a `figure_captions.md` file.
+The script refuses to write figures inside either the Git worktree or the certified-bundle input directory. It uses a unique temporary staging directory and does not delete any pre-existing same-prefix directory. It writes atomically to a new local directory with a `figure_manifest.json`. Narrative captions are supplied only by the manuscript TeX source; they are not embedded in, or separately generated beside, the figure files.
 
 ## Generated figures
 
@@ -20,7 +20,7 @@ The script refuses to write figures inside either the Git worktree or the certif
 4. **Record-year context and policy event adequacy.** Descriptive stored record-year ordering among edges with both stored years—explicitly labelled with its dated-pair denominator—and the predeclared reason that policy models are withheld: 3 primary-window events versus 30 required.
 5. **Year-stratified cross-relation configurations.** Observed P–G/P–D configurations with primary-null interval summaries for extensive and intensive alignment statistics.
 
-Each figure is saved as PNG and PDF. The generated figures and captions are local derived outputs, not an automatic GitHub release.
+Each figure is saved as PNG and PDF. The generated figures are local derived outputs, not an automatic GitHub release.
 
 ## Interpretation boundary
 
