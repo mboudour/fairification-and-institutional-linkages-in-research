@@ -7,9 +7,9 @@ manifest, hashes, and row counts before reading any table. It then creates two
 supplementary figures comparable to the institution/country material in the
 prior AI--mental-health study.
 
-The policy-issuer panel is withheld by default when fewer than 10 retained
-publications have a recorded issuer path. This display safeguard does not imply
-that policy documents or issuer attributes are absent.
+Policy-issuer landscapes are not plotted: their sparse publication coverage is
+reported only in the generated figure captions. This does not imply that policy
+documents or issuer attributes are absent.
 
 Named organizations and countries are protected local data. Both input and
 output directories must be outside this repository's Git worktree.
@@ -32,7 +32,7 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "20_generate_institution_country_figures_2.0"
+SCRIPT_VERSION = "20_generate_institution_country_figures_2.1"
 REQUIRED_RESTORATION_STAGE = "19_restore_institution_country_landscapes_1.0"
 REQUIRED_FILES = {
     "theme_institution_representation.csv",
@@ -56,7 +56,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--restoration-dir", type=Path, required=True, help="Completed Stage-19 output directory.")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--top-n", type=int, default=8)
-    parser.add_argument("--minimum-policy-publications", type=int, default=10)
     return parser.parse_args()
 
 
@@ -90,8 +89,8 @@ def preflight(args: argparse.Namespace) -> argparse.Namespace:
         raise FileNotFoundError(f"Completed Stage-19 output directory does not exist or is unsafe: {args.restoration_dir}")
     if args.output_dir.exists():
         raise FileExistsError(f"Output directory must not already exist: {args.output_dir}")
-    if args.top_n < 1 or args.minimum_policy_publications < 1:
-        raise ValueError("--top-n and --minimum-policy-publications must be positive.")
+    if args.top_n < 1:
+        raise ValueError("--top-n must be positive.")
     repo = repository_root()
     if repo is not None and (is_within(args.restoration_dir, repo) or is_within(args.output_dir, repo)):
         raise ValueError(f"Named input/output directories must be outside the Git worktree: {repo}")
@@ -222,27 +221,22 @@ def save_figure(figure: plt.Figure, output: Path, filename: str) -> list[str]:
     return [str(png), str(pdf)]
 
 
-def draw_heatmap_figure(*, kind: str, frame: pd.DataFrame, topics: pd.DataFrame, scope: pd.DataFrame, output: Path, top_n: int, minimum_policy_publications: int) -> tuple[list[str], str]:
+def draw_heatmap_figure(*, kind: str, frame: pd.DataFrame, topics: pd.DataFrame, scope: pd.DataFrame, output: Path, top_n: int) -> tuple[list[str], str]:
     if kind == "institution":
         identifier, label, title, filename, width = "organization_id", "organization_name", "Institutional representation across FAIRification publication themes", "figure_7_institution_landscapes", 26
         subtitle = "Top institutions are selected within each relation from the all-anchor view; cells show the percentage of hard-assigned publications with a recorded relation to that institution."
     else:
         identifier, label, title, filename, width = "country", "country", "Country representation across FAIRification publication themes", "figure_6_country_landscapes", 22
         subtitle = "Top stored countries are selected within each relation from the all-anchor view; cells show the percentage of hard-assigned publications represented by each country."
-    figure, axes = plt.subplots(1, 3, figsize=(18.0, 8.4), constrained_layout=False)
-    figure.subplots_adjust(left=0.075, right=0.985, top=0.80, bottom=0.15, wspace=1.10)
+    plotted_relations = RELATIONS[:2]
+    policy_support = relation_support(scope, "P_D_DI_issuer")
+    figure, axes = plt.subplots(1, 2, figsize=(13.0, 8.4), constrained_layout=False)
+    figure.subplots_adjust(left=0.095, right=0.985, top=0.80, bottom=0.15, wspace=1.05)
     figure.text(0.075, 0.965, title, ha="left", va="top", fontsize=15, fontweight="bold", color="#202124")
     figure.text(0.075, 0.932, subtitle, ha="left", va="top", fontsize=9.3, color="#555555")
     topic_codes = [f"T{int(row.theme_id)}\n(n={int(row.publication_denominator)})" for row in topics.itertuples(index=False)]
     captions: list[str] = []
-    for axis, (relation, panel_title, cmap) in zip(axes, RELATIONS):
-        support = relation_support(scope, relation)
-        if relation == "P_D_DI_issuer" and support < minimum_policy_publications:
-            axis.axis("off")
-            axis.text(0.5, 0.57, panel_title, transform=axis.transAxes, ha="center", va="center", fontsize=11, fontweight="bold", color="#202124")
-            axis.text(0.5, 0.41, f"Not plotted\n{support} publication endpoint{'s' if support != 1 else ''} with a recorded issuer path\n(minimum for display: {minimum_policy_publications})", transform=axis.transAxes, ha="center", va="center", fontsize=9, color="#555555")
-            captions.append(f"{panel_title} is withheld because only {support} retained publications have a recorded policy-issuer path; the absence of a panel is not evidence of absent policy documents or issuers.")
-            continue
+    for axis, (relation, panel_title, cmap) in zip(axes, plotted_relations):
         _, labels, matrix = panel_matrix(frame, relation=relation, id_column=identifier, label_column=label, topics=topics, top_n=top_n)
         if matrix.size == 0:
             axis.axis("off")
@@ -262,10 +256,13 @@ def draw_heatmap_figure(*, kind: str, frame: pd.DataFrame, topics: pd.DataFrame,
         for spine in axis.spines.values():
             spine.set_color("#B7C0CC")
         captions.append(f"{panel_title}: top {len(labels)} targets are chosen from the all-anchor representation before the K=3 cells are displayed.")
-    figure.text(0.075, 0.060, "T1 Institutional stewardship/Open Science    T2 Technical metadata/semantic workflows    T3 Heritage/collections/preservation", ha="left", va="center", fontsize=8.1, color="#444444")
-    figure.text(0.075, 0.034, "Stored country memberships are non-exclusive. Cells are descriptive and do not show institutional influence, funding intent, policy uptake, endorsement, or impact.", ha="left", va="center", fontsize=7.4, color="#666666")
+    figure.text(0.095, 0.060, "T1 Institutional stewardship/Open Science    T2 Technical metadata/semantic workflows    T3 Heritage/collections/preservation", ha="left", va="center", fontsize=8.1, color="#444444")
+    figure.text(0.095, 0.034, "Stored organization/country attributes are descriptive; country memberships are non-exclusive. Cells do not show institutional influence, funding intent, policy uptake, endorsement, or impact.", ha="left", va="center", fontsize=7.4, color="#666666")
     files = save_figure(figure, output, filename)
     plt.close(figure)
+    captions.append(
+        f"Policy-issuer representation reached through recorded publication--policy-document paths is omitted from the plotted panels because only {policy_support} retained publication endpoint{'s' if policy_support != 1 else ''} have a recorded issuer path. This sparse coverage is descriptive; omission is not evidence of absent policy documents or issuers."
+    )
     return files, " ".join(captions)
 
 
@@ -296,8 +293,8 @@ def main() -> None:
         validate_representation(institutions, kind="institution", allowed_views=allowed_views)
         validate_representation(countries, kind="country", allowed_views=allowed_views)
         args.output_dir.mkdir(parents=True, exist_ok=False)
-        institution_files, institution_caption = draw_heatmap_figure(kind="institution", frame=institutions, topics=topics, scope=scope, output=args.output_dir, top_n=args.top_n, minimum_policy_publications=args.minimum_policy_publications)
-        country_files, country_caption = draw_heatmap_figure(kind="country", frame=countries, topics=topics, scope=scope, output=args.output_dir, top_n=args.top_n, minimum_policy_publications=args.minimum_policy_publications)
+        institution_files, institution_caption = draw_heatmap_figure(kind="institution", frame=institutions, topics=topics, scope=scope, output=args.output_dir, top_n=args.top_n)
+        country_files, country_caption = draw_heatmap_figure(kind="country", frame=countries, topics=topics, scope=scope, output=args.output_dir, top_n=args.top_n)
         captions = "# Local-only FAIRification institution and country figures\n\n## Figure 6. Country landscapes\n\n" + country_caption + "\n\n## Figure 7. Institutional landscapes\n\n" + institution_caption + "\n\nAll panels describe Dimensions-recorded identifiers and stored attributes. They do not identify institutional influence, funding intent, policy endorsement, uptake, impact, or causal effects. Country memberships are non-exclusive.\n"
         atomic_text(args.output_dir / "institution_country_figure_captions.md", captions)
         figure_manifest = {
@@ -306,7 +303,7 @@ def main() -> None:
             "restoration_manifest": {"path": str(args.restoration_dir / "institution_country_restoration_manifest.json"), "sha256": restoration_manifest_hash, "stage": manifest["stage"]},
             "verified_input_outputs": {name: manifest["output_files"][name] for name in sorted(REQUIRED_FILES)},
             "top_n": args.top_n,
-            "minimum_policy_publications": args.minimum_policy_publications,
+            "policy_issuer_panel_rule": "Not plotted; all policy-issuer coverage is stated in the generated figure captions.",
             "institution_figure_files": institution_files,
             "country_figure_files": country_files,
             "data_boundary": "Named institution/country figures are protected local outputs and must not be committed to GitHub without a separate review.",

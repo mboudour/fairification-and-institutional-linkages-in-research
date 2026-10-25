@@ -55,7 +55,7 @@ Stage 19 writes these protected local tables:
 - theme-level scope summaries and a non-identifier aggregate scope summary;
 - validation checks and a SHA-256 input/output manifest.
 
-`code/reporting/20_generate_institution_country_figures.py` then creates local-only Figure 6 (country landscapes) and Figure 7 (institutional landscapes). The top targets are selected in each relation from the all-anchor view before their K=3 cells are plotted. Policy-issuer heatmap panels are withheld by default when fewer than 10 publications have a recorded issuer path; this is a display safeguard and is not evidence of missing policy documents or issuers.
+`code/reporting/20_generate_institution_country_figures.py` then creates local-only Figure 6 (country landscapes) and Figure 7 (institutional landscapes). The top targets are selected in each plotted relation from the all-anchor view before their K=3 cells are plotted. The figures display only publication-affiliation and grant-funder panels. Policy-issuer coverage is reported in each figure caption rather than as a sparse third panel; this is a display decision and is not evidence of missing policy documents or issuers.
 
 ## Local execution
 
